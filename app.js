@@ -9,6 +9,7 @@ const path = require("path");
 const productsRouter = require("./routes/productsRouter");
 const usersRouter = require("./routes/usersRouter");
 const ownersRouter = require("./routes/ownersRouter");
+const indexRouter = require("./routes/index");
 
 require("dotenv").config();
 
@@ -23,6 +24,7 @@ app.use(
     secret: process.env.EXPRESS_SESSION_SECRET,
   })
 );
+
 app.use(flash());
 
 app.set("view engine", "ejs");
