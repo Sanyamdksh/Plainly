@@ -19,7 +19,15 @@ router.get("/cart", isLoggedin, async (req, res) => {
   let user = await userModel
     .findOne({ email: req.user.email })
     .populate("cart");
-  res.render("cart");
+
+  let bill = 0;
+  user.cart.forEach((product) => {
+    const discountPrice =
+      Number(product.price) - (product.price * product.discount) / 100;
+    bill += discountPrice;
+  });
+  bill = bill + 20;
+  res.render("cart", { user, bill });
 });
 
 router.get("/addtocart/:productid", isLoggedin, async (req, res) => {
