@@ -1,9 +1,12 @@
 import React from "react";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
+import main from "../assets/main.webp";
+
 const hero = () => {
   return (
     <div className="min-h-screen w-full bg-amber-100">
+      {/* NAVBAR */}
       <div className="flex flex-row items-center p-12 justify-between">
         <h2 className="font-bold text-4xl text-stone-700 cursor-pointer">
           Plainly
@@ -22,6 +25,42 @@ const hero = () => {
         <div className="flex gap-x-6 text-xl text-stone-700">
           <RiShoppingCart2Line className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
           <CgProfile className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
+        </div>
+      </div>
+
+      {/* CONTENT */}
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between px-10 md:px-20 py-5">
+        {/* LEFT TEXT SECTION */}
+        <div className="max-w-lg text-center md:text-left mt-10 md:mt-0 mb-5">
+          <h1 className="text-5xl md:text-6xl font-bold text-stone-800 leading-tight mb-6">
+            Bring Home the Beauty of <br />
+            <span className="text-stone-600 italic inline-block mt-4">
+              Simple Living
+            </span>
+          </h1>
+          <p className="text-gray-700 text-lg mb-8">
+            Explore our collection of handcrafted lamps, indoor plants, and
+            elegant ceramic pots thoughtfully made to brighten and refresh your
+            home.
+          </p>
+
+          <div className="flex gap-4 justify-center md:justify-start">
+            <button className="bg-stone-700 hover:bg-stone-800 text-white px-6 py-3 rounded-md text-lg font-medium transition">
+              Shop Now
+            </button>
+            <button className="border border-stone-700 text-stone-700 px-6 py-3 rounded-md text-lg font-medium hover:bg-stone-700 hover:text-white transition">
+              Explore
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT IMAGE SECTION */}
+        <div className="relative md:w-1/2 flex justify-center items-center">
+          <img
+            src={main}
+            alt="Main setup"
+            className="rounded-2xl  w-[85%] md:w-[90%] object-cover z-10"
+          />
         </div>
       </div>
     </div>
