@@ -10,9 +10,16 @@ const productsRouter = require("./routes/productsRouter");
 const usersRouter = require("./routes/usersRouter");
 const ownersRouter = require("./routes/ownersRouter");
 const indexRouter = require("./routes/index");
+const cors = require("cors");
 
 require("dotenv").config();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

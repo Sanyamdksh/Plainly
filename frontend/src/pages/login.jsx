@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import desk from "../assets/desk.webp";
+import axios from "axios";
 
-const login = ({ onSwitch }) => {
+const Login = ({ onSwitch }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/users/login",
+        { email, password },
+        { withCredentials: true }
+      );
+      alert(res.data);
+    } catch (err) {
+      console.error(err);
+      alert("something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <motion.div
       className="w-full max-w-5xl h-[80vh] bg-amber-50 rounded-lg overflow-hidden flex flex-row-reverse z-10"
@@ -14,22 +37,36 @@ const login = ({ onSwitch }) => {
       <img src={desk} alt="desk" className="object-cover w-1/2 h-full" />
       <div className=" w-1/2 flex flex-col justify-center items-center">
         <h2 className="text-3xl font-semibold text-stone-700">Welcome Back!</h2>
-        <form className="w-full max-w-sm flex flex-col gap-4 mt-4">
+        <form
+          className="w-full max-w-sm flex flex-col gap-4 mt-4"
+          onSubmit={handleSubmit}
+        >
           <input
             type="email"
             placeholder="Email"
             className="p-3 rounded-md border border-stone-300 outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
             type="password"
             placeholder="Password"
             className="p-3 rounded-md border border-stone-300 outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <button
             type="submit"
-            className="p-3 bg-stone-700 text-amber-50 rounded-md hover:bg-stone-800 transition"
+            disabled={loading}
+            className={`p-3 text-amber-50 rounded-md transition ${
+              loading
+                ? "bg-stone-400 cursor-not-allowed"
+                : "bg-stone-700  hover:bg-stone-800 "
+            }`}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         <h4 className="font-medium text-stone-500 mt-4">
@@ -46,4 +83,4 @@ const login = ({ onSwitch }) => {
   );
 };
 
-export default login;
+export default Login;

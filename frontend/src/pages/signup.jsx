@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
 import desk from "../assets/desk.webp";
 
 const signup = ({ onSwitch }) => {
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/users/register",
+        { fullname, email, password },
+        { withCredentials: true }
+      );
+      alert(res.data);
+    } catch (err) {
+      alert(err.response?.data || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <motion.div
       className="w-full max-w-5xl h-[80vh] bg-amber-50 rounded-lg overflow-hidden flex flex-row z-10"
@@ -16,27 +39,41 @@ const signup = ({ onSwitch }) => {
         <h2 className="text-3xl font-semibold text-stone-700">
           Welcome to Plainly
         </h2>
-        <form className="w-full max-w-sm flex flex-col gap-4 mt-4">
+        <form
+          className="w-full max-w-sm flex flex-col gap-4 mt-4"
+          onSubmit={handleSignup}
+        >
           <input
             type="text"
             placeholder="Full Name"
             className="p-3 rounded-md border border-stone-300 outline-none"
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
           />
           <input
             type="email"
             placeholder="Email"
             className="p-3 rounded-md border border-stone-300 outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
             className="p-3 rounded-md border border-stone-300 outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button
             type="submit"
-            className="p-3 bg-stone-700 text-amber-50 rounded-md hover:bg-stone-800 transition"
+            disabled={loading}
+            className={`p-3 text-amber-50 rounded-md transition ${
+              loading
+                ? "bg-stone-400 cursor-not-allowed"
+                : "bg-stone-700  hover:bg-stone-800 "
+            }`}
           >
-            Sign Up
+            {loading ? "Signining up..." : "Sign Up"}
           </button>
         </form>
         <h4 className="font-medium text-stone-500 mt-4">
