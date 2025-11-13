@@ -1,5 +1,6 @@
 import Signup from "./pages/signup";
 import Landing from "./components/hero";
+import Products from "./components/products";
 import AuthContainer from "./pages/AuthContainer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -8,7 +9,16 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<AuthContainer />} />
-        <Route path="/home" element={<Landing />} />;
+        <Route
+          path="/home"
+          element={
+            <>
+              <Landing />
+              <Products />
+            </>
+          }
+        />
+        ;
       </Routes>
     </Router>
   );

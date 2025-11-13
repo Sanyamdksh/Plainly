@@ -20,7 +20,7 @@ const Signup = ({ onSwitch }) => {
         { fullname, email, password },
         { withCredentials: true }
       );
-      // alert(res.data);
+      alert(res.data);
       navigate("/home");
     } catch (err) {
       alert(err.response?.data || "Something went wrong");

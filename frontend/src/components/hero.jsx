@@ -1,9 +1,12 @@
 import React from "react";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
+import { TbLogout2 } from "react-icons/tb";
 import main from "../assets/main.webp";
+import { useNavigate } from "react-router-dom";
 
-const hero = () => {
+const Hero = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen w-full bg-amber-100">
       {/* NAVBAR */}
@@ -22,7 +25,11 @@ const hero = () => {
             About Us
           </p>
         </div>
-        <div className="flex gap-x-6 text-xl text-stone-700">
+        <div className="flex gap-x-6 text-xl">
+          <TbLogout2
+            className="cursor-pointer hover:text-red-700 hover:scale-125 transition-transform duration-200 text-red-600"
+            onClick={() => navigate("/")}
+          />
           <RiShoppingCart2Line className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
           <CgProfile className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
         </div>
@@ -67,4 +74,4 @@ const hero = () => {
   );
 };
 
-export default hero;
+export default Hero;

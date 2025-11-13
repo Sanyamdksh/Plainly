@@ -20,7 +20,7 @@ const Login = ({ onSwitch }) => {
         { email, password },
         { withCredentials: true }
       );
-      //   alert(res.data);
+      alert(res.data);
       navigate("/home");
     } catch (err) {
       console.error(err);
