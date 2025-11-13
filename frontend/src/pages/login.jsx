@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import desk from "../assets/desk.webp";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ onSwitch }) => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +20,8 @@ const Login = ({ onSwitch }) => {
         { email, password },
         { withCredentials: true }
       );
-      alert(res.data);
+      //   alert(res.data);
+      navigate("/home");
     } catch (err) {
       console.error(err);
       alert("something went wrong");

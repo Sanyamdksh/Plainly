@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import desk from "../assets/desk.webp";
+import { useNavigate } from "react-router-dom";
 
-const signup = ({ onSwitch }) => {
+const Signup = ({ onSwitch }) => {
+  const navigate = useNavigate();
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +20,8 @@ const signup = ({ onSwitch }) => {
         { fullname, email, password },
         { withCredentials: true }
       );
-      alert(res.data);
+      // alert(res.data);
+      navigate("/home");
     } catch (err) {
       alert(err.response?.data || "Something went wrong");
     } finally {
@@ -90,4 +93,4 @@ const signup = ({ onSwitch }) => {
   );
 };
 
-export default signup;
+export default Signup;
