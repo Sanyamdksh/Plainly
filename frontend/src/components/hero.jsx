@@ -48,9 +48,9 @@ const hero = () => {
             <button className="bg-stone-700 hover:bg-stone-800 text-white px-6 py-3 rounded-md text-lg font-medium transition">
               Shop Now
             </button>
-            <button className="border border-stone-700 text-stone-700 px-6 py-3 rounded-md text-lg font-medium hover:bg-stone-700 hover:text-white transition">
+            {/* <button className="border border-stone-700 text-stone-700 px-6 py-3 rounded-md text-lg font-medium hover:bg-stone-700 hover:text-white transition">
               Explore
-            </button>
+            </button> */}
           </div>
         </div>
 
