@@ -1,6 +1,49 @@
 import React from "react";
 
 const Products = () => {
+  const products = [
+    {
+      _id: 1,
+      name: "Sample Product",
+      price: 300,
+      discount: 10,
+      bgcolor: "#FFF37A",
+      panelcolor: "#FFFFFF",
+      textcolor: "#2C2C2C",
+      image: null,
+    },
+    {
+      _id: 2,
+      name: "Elegant Lamp",
+      price: 499,
+      discount: 0,
+      bgcolor: "#FFDCDC",
+      panelcolor: "#FAFAFA",
+      textcolor: "#4A4A4A",
+      image: null,
+    },
+    {
+      _id: 3,
+      name: "Wooden Vase",
+      price: 799,
+      discount: 5,
+      bgcolor: "#E3FFDC",
+      panelcolor: "#FFFFFF",
+      textcolor: "#333333",
+      image: null,
+    },
+    {
+      _id: 4,
+      name: "Ceramic Pot",
+      price: 250,
+      discount: 0,
+      bgcolor: "#EDE3FF",
+      panelcolor: "#FDFDFD",
+      textcolor: "#222222",
+      image: null,
+    },
+  ];
+
   return (
     <div className="min-h-screen w-full bg-[#F9F5E7]">
       <div className="p-8">
@@ -13,16 +56,31 @@ const Products = () => {
         </p>
 
         <div className="grid grid-cols-3 mt-10 gap-6">
-          {[1, 2, 3, 4].map((item) => (
+          {products.map((item) => (
             <div
               key={item}
               className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all"
+              style={{ backgroundColor: item.panelcolor }}
             >
-              <div className="h-48 w-auto bg-[#FFF37A] rounded-xl shadow-sm"></div>
-              <h3 className="text-xl font-medium text-stone-700 mt-2">
-                Product {item}
+              <div
+                className="h-48 w-full rounded-xl shadow-sm flex items-center justify-center"
+                style={{ backgroundColor: item.bgcolor }}
+              >
+                <div className="h-32 w-32 bg-white/40 rounded-lg border border-white"></div>
+              </div>
+
+              <h3
+                className="text-xl font-semibold mt-4"
+                style={{ color: item.textcolor }}
+              >
+                {item.name}
               </h3>
-              <p className="font-bold text-stone-900">Rs. 300</p>
+              <p
+                className="text-lg font-bold"
+                style={{ color: item.textcolor }}
+              >
+                Rs. {item.price}
+              </p>
               <div className="flex flex-col items-center mt-5 gap-3">
                 <button className="bg-red-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition">
                   Buy Now
