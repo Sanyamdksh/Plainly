@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div className="w-64 h-screen bg-stone-800 text-white p-6 flex flex-col gap-6">
@@ -17,10 +17,7 @@ const Sidebar = () => {
         Manage Products
       </Link>
 
-      <Link
-        className="mt-auto text-red-400 hover:text-red-500"
-        to="owner/logout"
-      >
+      <Link className="mt-auto text-red-400 hover:text-red-500" to="/">
         Logout
       </Link>
     </div>
