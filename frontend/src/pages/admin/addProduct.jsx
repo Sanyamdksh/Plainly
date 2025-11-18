@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Dashboard from "./dashboard";
 const AddProduct = () => {
   // const [product, setProduct] = useState({
@@ -34,27 +34,35 @@ const AddProduct = () => {
             className="w-full border p-3 rounded-md"
           />
 
-          <div className="flex gap-4">
-            <label className="flex flex-col">
-              <span className="text-sm text-stone-600">Background Color</span>
-              <input type="color" className="w-16 h-10" />
+          <div className="flex justify-between">
+            <label className="flex flex-col items-center">
+              <span className="text-sm font-medium text-stone-600">
+                Background Color
+              </span>
+              <input type="color" className="w-16 h-10 cursor-pointer" />
             </label>
 
-            <label className="flex flex-col">
-              <span className="text-sm text-stone-600">Panel Color</span>
-              <input type="color" className="w-16 h-10" />
+            <label className="flex flex-col items-center">
+              <span className="text-sm font-medium text-stone-600">
+                Panel Color
+              </span>
+              <input type="color" className="w-16 h-10 cursor-pointer" />
             </label>
 
-            <label className="flex flex-col">
-              <span className="text-sm text-stone-600">Text Color</span>
-              <input type="color" className="w-16 h-10" />
+            <label className="flex flex-col items-center">
+              <span className="text-sm font-medium text-stone-600">
+                Text Color
+              </span>
+              <input type="color" className="w-16 h-10 cursor-pointer" />
             </label>
           </div>
+          <label className="font-semibold text-stone-700 p-1">
+            Upload Product image
+          </label>
           <input
             type="file"
-            className="w-full bg-stone-100 p-3 border rounded-lg"
+            className="w-full bg-stone-100 p-3 border rounded-lg flex justify-between mt-2"
           />
-
           <button className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900">
             Add Product
           </button>
