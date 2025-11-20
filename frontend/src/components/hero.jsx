@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import { TbLogout2 } from "react-icons/tb";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   return (
     <div className="min-h-screen w-full bg-amber-100">
       {/* NAVBAR */}
@@ -31,7 +32,22 @@ const Hero = () => {
             onClick={() => navigate("/")}
           />
           <RiShoppingCart2Line className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
-          <CgProfile className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
+          <div className="profile">
+            <CgProfile
+              className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200"
+              onMouseEnter={() => setOpen(true)}
+              onMouseLeave={() => setOpen(false)}
+            />
+            {open && (
+              <div
+                className="absolute bg-white shadow-xl rounded-lg p-2 z-10"
+                onMouseEnter={() => setOpen(true)}
+                onMouseLeave={() => setOpen(false)}
+              >
+                <h3 className="text-lg font-semibold text-stone-700"></h3>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
