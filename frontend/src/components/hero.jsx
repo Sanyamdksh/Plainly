@@ -40,11 +40,40 @@ const Hero = () => {
             />
             {open && (
               <div
-                className="absolute bg-white shadow-xl rounded-lg p-2 z-10"
+                className="absolute bg-white shadow-xl rounded-lg p-5 z-50 right-2 w-56"
                 onMouseEnter={() => setOpen(true)}
                 onMouseLeave={() => setOpen(false)}
               >
-                <h3 className="text-lg font-semibold text-stone-700"></h3>
+                <h3 className="text-lg font-semibold text-stone-700">
+                  Hello, User
+                </h3>
+                <p className="text-sm text-stone-500 mb-4">abc@gmail.com</p>
+                <ul className="space-y-3 text-stone-700 font-medium">
+                  <li
+                    className="cursor-pointer hover:text-black"
+                    onClick={() => navigate("/orders")}
+                  >
+                    My Orders
+                  </li>
+                  <li
+                    className="cursor-pointer hover:text-black"
+                    onClick={() => navigate("/cart")}
+                  >
+                    Cart
+                  </li>
+                  <li
+                    className="cursor-pointer hover:text-black"
+                    onClick={() => navigate("/profile")}
+                  >
+                    Edit Profile
+                  </li>
+                  <li
+                    className="cursor-pointer text-red-600 hover:text-red-700"
+                    onClick={() => navigate("/")}
+                  >
+                    Logout
+                  </li>
+                </ul>
               </div>
             )}
           </div>
