@@ -1,15 +1,19 @@
 import React from "react";
 import Dashboard from "./dashboard";
 const AddProduct = () => {
-  // const [product, setProduct] = useState({
-  //   name: "",
-  //   price: "",
-  //   discount: 0,
-  //   bgcolor: "#ffffff",
-  //   panelcolour: "#ffffff",
-  //   textcolor: "#000000",
-  //   image: null,
-  // });
+  const [product, setProduct] = useState({
+    name: "",
+    price: "",
+    discount: 0,
+    bgcolor: "#ffffff",
+    panelcolour: "#ffffff",
+    textcolor: "#000000",
+    image: null,
+  });
+
+  const handleChange = (e) => {
+    setProduct({ ...product, [e.target.name]: e.target.value });
+  };
 
   return (
     <Dashboard>
