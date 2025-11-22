@@ -1,48 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Products = () => {
-  const products = [
-    {
-      _id: 1,
-      name: "Sample Product",
-      price: 300,
-      discount: 10,
-      bgcolor: "#FFF37A",
-      panelcolor: "#FFFFFF",
-      textcolor: "#2C2C2C",
-      image: null,
-    },
-    {
-      _id: 2,
-      name: "Elegant Lamp",
-      price: 499,
-      discount: 0,
-      bgcolor: "#FFDCDC",
-      panelcolor: "#FAFAFA",
-      textcolor: "#4A4A4A",
-      image: null,
-    },
-    {
-      _id: 3,
-      name: "Wooden Vase",
-      price: 799,
-      discount: 5,
-      bgcolor: "#E3FFDC",
-      panelcolor: "#FFFFFF",
-      textcolor: "#333333",
-      image: null,
-    },
-    {
-      _id: 4,
-      name: "Ceramic Pot",
-      price: 250,
-      discount: 0,
-      bgcolor: "#EDE3FF",
-      panelcolor: "#FDFDFD",
-      textcolor: "#222222",
-      image: null,
-    },
-  ];
+  // const products = [
+  //   {
+  //     _id: 1,
+  //     name: "Sample Product",
+  //     price: 300,
+  //     discount: 10,
+  //     bgcolor: "#FFF37A",
+  //     panelcolor: "#FFFFFF",
+  //     textcolor: "#2C2C2C",
+  //     image: null,
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "Elegant Lamp",
+  //     price: 499,
+  //     discount: 0,
+  //     bgcolor: "#FFDCDC",
+  //     panelcolor: "#FAFAFA",
+  //     textcolor: "#4A4A4A",
+  //     image: null,
+  //   },
+  //   {
+  //     _id: 3,
+  //     name: "Wooden Vase",
+  //     price: 799,
+  //     discount: 5,
+  //     bgcolor: "#E3FFDC",
+  //     panelcolor: "#FFFFFF",
+  //     textcolor: "#333333",
+  //     image: null,
+  //   },
+  //   {
+  //     _id: 4,
+  //     name: "Ceramic Pot",
+  //     price: 250,
+  //     discount: 0,
+  //     bgcolor: "#EDE3FF",
+  //     panelcolor: "#FDFDFD",
+  //     textcolor: "#222222",
+  //     image: null,
+  //   },
+  // ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5173/products/all", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.products);
+      })
+      .catch((err) => console.log(err));
+  });
 
   return (
     <div className="min-h-screen w-full bg-[#F9F5E7]">
@@ -66,7 +78,11 @@ const Products = () => {
                 className="h-48 w-full rounded-xl shadow-sm flex items-center justify-center"
                 style={{ backgroundColor: item.bgcolor }}
               >
-                <div className="h-32 w-32 bg-white/40 rounded-lg border border-white"></div>
+                <img
+                  src={`data:image/jpeg;base64,${item.image}`}
+                  className="h-32 w-32 object-cover rounded-lg shadow-sm border border-white"
+                  alt={item.name}
+                />
               </div>
 
               <h3
