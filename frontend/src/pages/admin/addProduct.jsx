@@ -1,6 +1,7 @@
 import React from "react";
 import Dashboard from "./dashboard";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -63,18 +64,29 @@ const AddProduct = () => {
           <div className="bg-white p-6 rounded-lg shadow-md max-w-lg space-y-5">
             <input
               type="text"
+              name="name"
               placeholder="Product name"
               className="w-full border p-3 rounded-md"
+              value={product.name}
+              onChange={handleChange}
+              required
             />
             <input
               type="number"
+              name="price"
               placeholder="Price"
               className="w-full border p-3 rounded-md"
+              value={product.price}
+              onChange={handleChange}
+              required
             />
             <input
               type="number"
+              name="discount"
               placeholder="Discount"
               className="w-full border p-3 rounded-md"
+              value={product.discount}
+              onChange={handleChange}
             />
 
             <div className="flex justify-between">
@@ -82,21 +94,39 @@ const AddProduct = () => {
                 <span className="text-sm font-medium text-stone-600">
                   Background Color
                 </span>
-                <input type="color" className="w-16 h-10 cursor-pointer" />
+                <input
+                  type="color"
+                  className="w-16 h-10 cursor-pointer"
+                  name="bgcolor"
+                  value={product.bgcolor}
+                  onChange={handleChange}
+                />
               </label>
 
               <label className="flex flex-col items-center">
                 <span className="text-sm font-medium text-stone-600">
                   Panel Color
                 </span>
-                <input type="color" className="w-16 h-10 cursor-pointer" />
+                <input
+                  type="color"
+                  className="w-16 h-10 cursor-pointer"
+                  name="panelcolor"
+                  value={product.panelcolor}
+                  onChange={handleChange}
+                />
               </label>
 
               <label className="flex flex-col items-center">
                 <span className="text-sm font-medium text-stone-600">
                   Text Color
                 </span>
-                <input type="color" className="w-16 h-10 cursor-pointer" />
+                <input
+                  type="color"
+                  className="w-16 h-10 cursor-pointer"
+                  name="textcolor"
+                  value={product.textcolor}
+                  onChange={handleChange}
+                />
               </label>
             </div>
             <label className="font-semibold text-stone-700 p-1">
@@ -105,8 +135,14 @@ const AddProduct = () => {
             <input
               type="file"
               className="w-full bg-stone-100 p-3 border rounded-lg flex justify-between mt-2"
+              onChange={handleImageChange}
+              accept="image/"
+              required
             />
-            <button className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900">
+            <button
+              className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900"
+              type="submit"
+            >
               Add Product
             </button>
           </div>

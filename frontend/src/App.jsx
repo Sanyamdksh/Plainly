@@ -22,6 +22,15 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/products"
+          element={
+            <>
+              <Landing />
+              <Products scrollToSection />
+            </>
+          }
+        />
         <Route path="/owner/dashboard" element={<DashLayout />} />
         <Route path="/owner/add-product" element={<AddProduct />} />
       </Routes>

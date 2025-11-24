@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Products = () => {
+const Products = (scrollToSection) => {
   // const products = [
   //   {
   //     _id: 1,
@@ -46,7 +46,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5173/products/all", {
+    fetch("http://localhost:3000/products/all", {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -55,9 +55,15 @@ const Products = () => {
       })
       .catch((err) => console.log(err));
   });
+  useEffect(() => {
+    if (scrollToSection) {
+      const el = document.getElementById("products-section");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [scrollToSection]);
 
   return (
-    <div className="min-h-screen w-full bg-[#F9F5E7]">
+    <div id="products-section" className="min-h-screen w-full bg-[#F9F5E7]">
       <div className="p-8">
         <h2 className="text-4xl font-semibold text-[#2C2C2C] mb-6">
           Explore Our Wide Range of Products

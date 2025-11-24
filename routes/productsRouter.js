@@ -17,6 +17,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
     });
     req.flash("success", "Product created Successfully");
     res.redirect("/owners/admin");
+    // res.send("chal gya");
   } catch (err) {
     res.send(err.message);
   }
