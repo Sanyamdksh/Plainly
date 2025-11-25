@@ -1,48 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 const Products = (scrollToSection) => {
-  // const products = [
-  //   {
-  //     _id: 1,
-  //     name: "Sample Product",
-  //     price: 300,
-  //     discount: 10,
-  //     bgcolor: "#FFF37A",
-  //     panelcolor: "#FFFFFF",
-  //     textcolor: "#2C2C2C",
-  //     image: null,
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "Elegant Lamp",
-  //     price: 499,
-  //     discount: 0,
-  //     bgcolor: "#FFDCDC",
-  //     panelcolor: "#FAFAFA",
-  //     textcolor: "#4A4A4A",
-  //     image: null,
-  //   },
-  //   {
-  //     _id: 3,
-  //     name: "Wooden Vase",
-  //     price: 799,
-  //     discount: 5,
-  //     bgcolor: "#E3FFDC",
-  //     panelcolor: "#FFFFFF",
-  //     textcolor: "#333333",
-  //     image: null,
-  //   },
-  //   {
-  //     _id: 4,
-  //     name: "Ceramic Pot",
-  //     price: 250,
-  //     discount: 0,
-  //     bgcolor: "#EDE3FF",
-  //     panelcolor: "#FDFDFD",
-  //     textcolor: "#222222",
-  //     image: null,
-  //   },
-  // ];
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -63,7 +21,7 @@ const Products = (scrollToSection) => {
   }, [scrollToSection]);
 
   return (
-    <div id="products-section" className="min-h-screen w-full bg-[#F9F5E7]">
+    <div id="products-section" className="min-h-screen w-full bg-white">
       <div className="p-8">
         <h2 className="text-4xl font-semibold text-[#2C2C2C] mb-6">
           Explore Our Wide Range of Products
@@ -77,30 +35,23 @@ const Products = (scrollToSection) => {
           {products.map((item) => (
             <div
               key={item}
-              className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all"
-              style={{ backgroundColor: item.panelcolor }}
+              className="rounded-2xl p-6 shadow-md hover:shadow-lg transition-all bg-gray-200"
             >
               <div
-                className="h-48 w-full rounded-xl shadow-sm flex items-center justify-center"
+                className="h-48 w-full rounded-xl shadow-sm flex items-end justify-center"
                 style={{ backgroundColor: item.bgcolor }}
               >
                 <img
                   src={`data:image/jpeg;base64,${item.image}`}
-                  className="h-32 w-32 object-cover rounded-lg shadow-sm border border-white"
+                  className="h-38 w-38 object-cover rounded-lg shadow-md border border-white mb-4"
                   alt={item.name}
                 />
               </div>
 
-              <h3
-                className="text-xl font-semibold mt-4"
-                style={{ color: item.textcolor }}
-              >
+              <h3 className="text-xl font-semibold mt-4 text-gray-700">
                 {item.name}
               </h3>
-              <p
-                className="text-lg font-bold"
-                style={{ color: item.textcolor }}
-              >
+              <p className="text-lg font-semibold text-black">
                 Rs. {item.price}
               </p>
               <div className="flex flex-col items-center mt-5 gap-3">

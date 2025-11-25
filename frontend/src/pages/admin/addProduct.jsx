@@ -8,9 +8,7 @@ const AddProduct = () => {
     name: "",
     price: "",
     discount: 0,
-    bgcolor: "#ffffff",
     panelcolour: "#ffffff",
-    textcolor: "#000000",
     image: null,
   });
 

@@ -9,7 +9,7 @@ const Hero = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   return (
-    <div className="min-h-screen w-full bg-amber-100">
+    <div className="min-h-screen w-full bg-amber-50">
       {/* NAVBAR */}
       <div className="flex flex-row items-center p-12 justify-between">
         <h2 className="font-bold text-4xl text-stone-700 cursor-pointer">
