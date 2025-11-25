@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import desk from "../assets/desk.webp";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = ({ onSwitch }) => {
   const navigate = useNavigate();
@@ -20,11 +21,13 @@ const Login = ({ onSwitch }) => {
         { email, password },
         { withCredentials: true }
       );
-      alert(res.data);
-      navigate("/home");
+      toast.success("Login Successfull");
+      setTimeout(() => {
+        window.location.href = "/home";
+      }, 1000);
     } catch (err) {
       console.error(err);
-      alert("something went wrong");
+      toast.error("something went wrong");
     } finally {
       setLoading(false);
     }
