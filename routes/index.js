@@ -4,10 +4,10 @@ const isLoggedin = require("../middlewares/isLoggedin");
 const productModel = require("../models/product-model");
 const userModel = require("../models/user-model");
 
-router.get("/", (req, res) => {
-  let error = req.flash("error");
-  res.render("index", { error, loggedin: false });
-});
+// router.get("/", (req, res) => {
+//   let error = req.flash("error");
+//   res.render("index", { error, loggedin: false });
+// });
 
 router.get("/shop", isLoggedin, async (req, res) => {
   let product = await productModel.find();
@@ -39,7 +39,12 @@ router.get("/addtocart/:productid", isLoggedin, async (req, res) => {
 });
 
 router.get("/logout", isLoggedin, (req, res) => {
-  res.render("shop");
+  res.clearCookie("token", {
+    httpOnly: false,
+    secure: false,
+    sameSite: "lax",
+  });
+  res.json({ success: true, message: "Logged out successfully" });
 });
 
 module.exports = router;

@@ -8,6 +8,14 @@ import { useNavigate } from "react-router-dom";
 const Hero = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const handleLogout = async () => {
+    await fetch("http://localhost:3000/logout", {
+      method: "GET",
+      credentials: "include",
+    });
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen w-full bg-amber-50">
       {/* NAVBAR */}
@@ -29,7 +37,7 @@ const Hero = () => {
         <div className="flex gap-x-6 text-xl">
           <TbLogout2
             className="cursor-pointer hover:text-red-700 hover:scale-125 transition-transform duration-200 text-red-600"
-            onClick={() => navigate("/")}
+            onClick={handleLogout}
           />
           <RiShoppingCart2Line className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
           <div className="profile">
@@ -69,7 +77,7 @@ const Hero = () => {
                   </li>
                   <li
                     className="cursor-pointer text-red-600 hover:text-red-700"
-                    onClick={() => navigate("/")}
+                    onClick={handleLogout}
                   >
                     Logout
                   </li>
