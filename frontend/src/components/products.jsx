@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Products = (scrollToSection) => {
+const Products = ({ scrollToSection }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {

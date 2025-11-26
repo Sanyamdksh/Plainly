@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const BuyNow = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     fullname: "User",
     email: "xyz@gmail.com",
@@ -13,6 +17,16 @@ const BuyNow = () => {
     if (!user.address) setShowForm(true);
   }, [user.address]);
 
+  useEffect(() => {
+    fetch("http://localhost:3000/users/profile", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setUser(data.user))
+      .catch((err) => console.log(err));
+  }, []);
+
   const [formData, setFormData] = useState({
     contact: "",
     line1: "",
@@ -22,12 +36,32 @@ const BuyNow = () => {
     zip: "",
   });
 
-  const handleAddress = () => {
-    setUser({
-      ...user,
-      address: formData,
-    });
-    setShowForm(false);
+  const handleAddress = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/users/login",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      setUser({
+        ...user,
+        address: formData,
+      });
+      setShowForm(false);
+      toast.success("Address Saved");
+    } catch (err) {
+      console.error(err);
+      toast.success("Error");
+    }
+  };
+
+  const handleOrder = () => {
+    toast.success("Order Placed");
+    setTimeout(() => {
+      navigate("/home");
+    }, 1500);
   };
 
   return (
@@ -175,6 +209,32 @@ const BuyNow = () => {
             </form>
           </div>
         )}
+        <div className="w-[55%] bg-amber-50 rounded-md shadow-md border border-gray-300 p-4 mt-6">
+          <h2 className="font-semibold text-black text-2xl ml-4">
+            Payment Method
+          </h2>
+
+          <div className="flex items-center gap-3 ml-6 mt-4">
+            <input
+              type="radio"
+              id="cod"
+              name="payment"
+              value="COD"
+              defaultChecked
+              className="w-5 h-5"
+            />
+            <label htmlFor="cod" className="text-lg text-gray-700">
+              Cash on Delivery (COD)
+            </label>
+          </div>
+
+          <button
+            className="mt-6 ml-4 bg-stone-700 text-white px-7 py-3 rounded-lg hover:bg-stone-900 transition cursor-pointer"
+            onClick={handleOrder}
+          >
+            Place Order
+          </button>
+        </div>
       </div>
     </div>
   );
