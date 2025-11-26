@@ -1,6 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const BuyNow = () => {
+  const [user, setUser] = useState({
+    fullname: "User",
+    email: "xyz@gmail.com",
+    address: null,
+  });
+
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    if (!user.address) setShowForm(true);
+  }, [user.address]);
+
+  const [formData, setFormData] = useState({
+    contact: "",
+    line1: "",
+    line2: "",
+    city: "",
+    state: "",
+    zip: "",
+  });
+
+  const handleAddress = () => {
+    setUser({
+      ...user,
+      address: formData,
+    });
+    setShowForm(false);
+  };
+
   return (
     <div className="min-h-screen bg-slate-100">
       <div className="flex flex-col p-10">
@@ -13,8 +42,8 @@ const BuyNow = () => {
         <div className="w-[55%] bg-amber-50 rounded-md shadow-md border border-gray-300 p-2">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-col ml-10">
-              <p className="text-2xl">Hello, User</p>
-              <p className="text-base text-gray-600">xyz@gmail.com</p>
+              <p className="text-2xl">Hello, {user.fullname}</p>
+              <p className="text-base text-gray-600">{user.email}</p>
             </div>
             <button className="mr-7 bg-stone-200 p-2 rounded-xl shadow-md border border-gray-300 cursor-pointer">
               Change
@@ -26,98 +55,126 @@ const BuyNow = () => {
             <h2 className="font-semibold text-black text-2xl ml-9">
               Address Details
             </h2>
-            <button className="mr-5 bg-stone-200 p-2 rounded-xl shadow-md border border-gray-300 cursor-pointer">
-              Add Address
+            <button
+              className="mr-5 bg-stone-200 p-2 rounded-xl shadow-md border border-gray-300 cursor-pointer"
+              onClick={() => setShowForm(true)}
+            >
+              {user.address ? "Change Address" : "Add Address"}
             </button>
           </div>
+          {user.address && !showForm && (
+            <div className="mt-4 ml-10 text-gray-700 space-y-0.5">
+              <p>{user.address.line1}</p>
+              <p>{user.address.line2}</p>
+              <p>
+                {user.address.city},{user.address.state}- {user.address.zip}
+              </p>
+              <p>Contact: {user.address.contact}</p>
+            </div>
+          )}
         </div>
-        <div className="w-[40%] bg-gray-200 rounded-md shadow-md border border-gray-300 p-3 mt-5">
-          <form className="flex flex-col gap-y-4">
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-sm text-gray-700">
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Full Name"
-                className="bg-white border border-gray-500 p-2 rounded w-[40%]"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="contact" className="text-sm text-gray-700">
-                Contact
-              </label>
-              <input
-                id="contact"
-                type="number"
-                placeholder="Contact Number"
-                className="bg-white border border-gray-500 p-2 rounded w-[40%]"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="address1" className="text-sm text-gray-700">
-                Address Line 1
-              </label>
-              <input
-                id="address1"
-                type="text"
-                placeholder="Address Line 1"
-                className="bg-white border border-gray-500 p-2 rounded w-[80%]"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="address2" className="text-sm text-gray-700">
-                Address Line 2
-              </label>
-              <input
-                id="address2"
-                type="text"
-                placeholder="Address Line 2"
-                className="bg-white border border-gray-500 p-2 rounded w-[80%]"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="city" className="text-sm text-gray-700">
-                City
-              </label>
-              <input
-                id="city"
-                type="text"
-                placeholder="City"
-                className="bg-white border border-gray-500 p-2 rounded w-[50%]"
-              />
-            </div>
-            <div className="flex gap-x-4 items-center">
-              <div className="flex flex-col w-[40%]">
-                <label htmlFor="state" className="text-sm text-gray-700">
-                  State
+        {showForm && (
+          <div className="w-[40%] bg-gray-200 rounded-md shadow-md border border-gray-300 p-3 mt-5">
+            <form className="flex flex-col gap-y-4">
+              <div className="flex flex-col">
+                <label htmlFor="contact" className="text-sm text-gray-700">
+                  Contact
                 </label>
                 <input
-                  id="state"
-                  type="text"
-                  placeholder="State"
-                  className="bg-white border border-gray-500 p-2 rounded"
+                  id="contact"
+                  type="number"
+                  placeholder="Contact Number"
+                  className="bg-white border border-gray-500 p-2 rounded w-[40%]"
+                  onChange={(e) =>
+                    setFormData({ ...formData, contact: e.target.value })
+                  }
                 />
               </div>
 
-              <div className="flex flex-col w-[40%]">
-                <label htmlFor="zip" className="text-sm text-gray-700">
-                  Zip Code
+              <div className="flex flex-col">
+                <label htmlFor="address1" className="text-sm text-gray-700">
+                  Address Line 1
                 </label>
                 <input
-                  id="zip"
+                  id="address1"
                   type="text"
-                  placeholder="Zip Code"
-                  className="bg-white border border-gray-500 p-2 rounded"
+                  placeholder="Address Line 1"
+                  className="bg-white border border-gray-500 p-2 rounded w-[80%]"
+                  onChange={(e) =>
+                    setFormData({ ...formData, line1: e.target.value })
+                  }
                 />
               </div>
-            </div>
-          </form>
-        </div>
+
+              <div className="flex flex-col">
+                <label htmlFor="address2" className="text-sm text-gray-700">
+                  Address Line 2
+                </label>
+                <input
+                  id="address2"
+                  type="text"
+                  placeholder="Address Line 2"
+                  className="bg-white border border-gray-500 p-2 rounded w-[80%]"
+                  onChange={(e) =>
+                    setFormData({ ...formData, line2: e.target.value })
+                  }
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="city" className="text-sm text-gray-700">
+                  City
+                </label>
+                <input
+                  id="city"
+                  type="text"
+                  placeholder="City"
+                  className="bg-white border border-gray-500 p-2 rounded w-[50%]"
+                  onChange={(e) =>
+                    setFormData({ ...formData, city: e.target.value })
+                  }
+                />
+              </div>
+              <div className="flex gap-x-4 items-center">
+                <div className="flex flex-col w-[40%]">
+                  <label htmlFor="state" className="text-sm text-gray-700">
+                    State
+                  </label>
+                  <input
+                    id="state"
+                    type="text"
+                    placeholder="State"
+                    className="bg-white border border-gray-500 p-2 rounded"
+                    onChange={(e) =>
+                      setFormData({ ...formData, state: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div className="flex flex-col w-[40%]">
+                  <label htmlFor="zip" className="text-sm text-gray-700">
+                    Zip Code
+                  </label>
+                  <input
+                    id="zip"
+                    type="text"
+                    placeholder="Zip Code"
+                    className="bg-white border border-gray-500 p-2 rounded"
+                    onChange={(e) =>
+                      setFormData({ ...formData, zip: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+              <button
+                type="button"
+                className="bg-stone-700 text-white px-4 py-2 w-[40%] rounded-lg hover:bg-stone-800"
+                onClick={handleAddress}
+              >
+                Save Address
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );
