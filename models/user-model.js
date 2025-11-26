@@ -18,8 +18,16 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
-  contact: Number,
-  picture: String,
+  // contact: Number,
+  // picture: String,
+  address: {
+    line1: String,
+    line2: String,
+    city: String,
+    state: String,
+    zip: String,
+    contact: Number,
+  },
 });
 
 module.exports = mongoose.model("user", userSchema);
