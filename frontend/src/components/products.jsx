@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Products = ({ scrollToSection }) => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/products/all", {
@@ -12,7 +14,7 @@ const Products = ({ scrollToSection }) => {
         setProducts(data.products);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
   useEffect(() => {
     if (scrollToSection) {
       const el = document.getElementById("products-section");
@@ -34,7 +36,7 @@ const Products = ({ scrollToSection }) => {
         <div className="grid grid-cols-3 mt-10 gap-6">
           {products.map((item) => (
             <div
-              key={item}
+              key={item._id}
               className="rounded-2xl p-6 shadow-md hover:shadow-lg transition-all bg-gray-200"
             >
               <div
@@ -55,7 +57,12 @@ const Products = ({ scrollToSection }) => {
                 Rs. {item.price}
               </p>
               <div className="flex flex-col items-center mt-5 gap-3">
-                <button className="bg-red-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition">
+                <button
+                  className="bg-red-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer"
+                  onClick={() =>
+                    navigate("/buynow", { state: { product: item } })
+                  }
+                >
                   Buy Now
                 </button>
               </div>

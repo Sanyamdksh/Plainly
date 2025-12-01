@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const BuyNow = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const product = location.state?.product;
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!product) navigate("/home");
+  }, [product]);
+
   const [user, setUser] = useState({
     fullname: "User",
     email: "xyz@gmail.com",
@@ -12,10 +20,6 @@ const BuyNow = () => {
   });
 
   const [showForm, setShowForm] = useState(false);
-
-  useEffect(() => {
-    if (!user.address) setShowForm(true);
-  }, [user.address]);
 
   useEffect(() => {
     fetch("http://localhost:3000/users/profile", {
@@ -27,6 +31,12 @@ const BuyNow = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    if (!loading && !user.address) {
+      setShowForm(true);
+    }
+  }, [loading, user.address]);
+
   const [formData, setFormData] = useState({
     contact: "",
     line1: "",
@@ -36,19 +46,23 @@ const BuyNow = () => {
     zip: "",
   });
 
+  // const updateForm = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+
   const handleAddress = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/login",
+        "http://localhost:3000/users/save-add",
         formData,
         {
           withCredentials: true,
         }
       );
-      setUser({
-        ...user,
+      setUser((prev) => ({
+        ...prev,
         address: formData,
-      });
+      }));
       setShowForm(false);
       toast.success("Address Saved");
     } catch (err) {
@@ -63,6 +77,10 @@ const BuyNow = () => {
       navigate("/home");
     }, 1500);
   };
+
+  if (!user || !product) return <p>Loading...</p>;
+
+  const TotalPrice = product.price - (product.price * product.discount) / 100;
 
   return (
     <div className="min-h-screen bg-slate-100 p-10">
@@ -239,11 +257,11 @@ const BuyNow = () => {
         </div>
         <div className="w-[60%] bg-white rounded-md shadow-md border p-5 h-fit">
           <h3 className="text-2xl font-semibold mb-4">Order Summary</h3>
-          <p className="text-lg font-medium">Product</p>
-          <p>Price: ₹200</p>
-          <p>Discount: 30%</p>
+          <p className="text-lg font-medium">{product.name}</p>
+          <p>Price: ₹{product.price}</p>
+          <p>Discount: {product.discount}%</p>
           <hr className="my-3" />
-          <p className="font-semibold text-xl">Total: ₹2200</p>
+          <p className="font-semibold text-xl">Total: ₹{TotalPrice}</p>
         </div>
       </div>
     </div>
