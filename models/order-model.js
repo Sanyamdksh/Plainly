@@ -11,6 +11,7 @@ const orderSchema = mongoose.Schema({
       product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
       name: String,
       price: Number,
+      image: String,
     },
   ],
   amount: Number,
