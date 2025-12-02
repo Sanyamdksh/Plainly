@@ -15,8 +15,8 @@ const userSchema = mongoose.Schema({
     },
   ],
   orders: {
-    type: Array,
-    default: [],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "order",
   },
   // contact: Number,
   // picture: String,
