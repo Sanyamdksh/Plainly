@@ -7,7 +7,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
   try {
     let { name, price, discount, bgcolor, panelcolor, textcolor } = req.body;
     let product = await productModel.create({
-      image: req.file.buffer.toString("base64"),
+      image: `/uploads/${req.file.filename}`,
       name,
       price,
       discount,

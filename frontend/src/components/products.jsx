@@ -37,15 +37,15 @@ const Products = ({ scrollToSection }) => {
           {products.map((item) => (
             <div
               key={item._id}
-              className="rounded-2xl p-6 shadow-md hover:shadow-lg transition-all bg-gray-200"
+              className="rounded-2xl p-6 shadow-md hover:shadow-lg transition-all bg-stone-100 border border-gray-300"
             >
               <div
                 className="h-48 w-full rounded-xl shadow-sm flex items-end justify-center"
                 style={{ backgroundColor: item.bgcolor }}
               >
                 <img
-                  src={`data:image/jpeg;base64,${item.image}`}
-                  className="h-38 w-38 object-cover rounded-lg shadow-md border border-white mb-4"
+                  src={`http://localhost:3000${item.image}`}
+                  className="h-48 w-48 object-cover shadow-md "
                   alt={item.name}
                 />
               </div>

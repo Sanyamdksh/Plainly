@@ -288,9 +288,18 @@ const BuyNow = () => {
         </div>
         <div className="w-[60%] bg-white rounded-md shadow-md border p-5 h-fit">
           <h3 className="text-2xl font-semibold mb-4">Order Summary</h3>
-          <p className="text-lg font-medium">{product.name}</p>
-          <p>Price: ₹{product.price}</p>
-          <p>Discount: {product.discount}%</p>
+          <div className="flex flex-row justify-between">
+            <div className="flex flex-col justify-center ">
+              <p className="text-lg font-medium">{product.name}</p>
+              <p>Price: ₹{product.price}</p>
+              <p>Discount: {product.discount}%</p>
+            </div>
+            <img
+              src={`http://localhost:3000${product.image}`}
+              alt={product.name}
+              className="w-24 h-24 mr-10"
+            />
+          </div>
           <hr className="my-3" />
           <p className="font-semibold text-xl">Total: ₹{TotalPrice}</p>
         </div>

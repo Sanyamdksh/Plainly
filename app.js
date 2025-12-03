@@ -40,5 +40,6 @@ app.use("/", indexRouter);
 app.use("/owners", ownersRouter);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
+app.use("/uploads", express.static("uploads"));
 
 app.listen(3000);

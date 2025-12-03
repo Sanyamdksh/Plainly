@@ -8,8 +8,8 @@ const AddProduct = () => {
     name: "",
     price: "",
     discount: 0,
-    panelcolour: "#ffffff",
     image: null,
+    bgcolor: "#ffffff",
   });
 
   const handleChange = (e) => {
@@ -28,8 +28,6 @@ const AddProduct = () => {
     formData.append("price", product.price);
     formData.append("discount", product.discount);
     formData.append("bgcolor", product.bgcolor);
-    formData.append("panelcolor", product.panelcolor);
-    formData.append("textcolor", product.textcolor);
     formData.append("image", product.image);
 
     try {
@@ -97,32 +95,6 @@ const AddProduct = () => {
                   className="w-16 h-10 cursor-pointer"
                   name="bgcolor"
                   value={product.bgcolor}
-                  onChange={handleChange}
-                />
-              </label>
-
-              <label className="flex flex-col items-center">
-                <span className="text-sm font-medium text-stone-600">
-                  Panel Color
-                </span>
-                <input
-                  type="color"
-                  className="w-16 h-10 cursor-pointer"
-                  name="panelcolor"
-                  value={product.panelcolor}
-                  onChange={handleChange}
-                />
-              </label>
-
-              <label className="flex flex-col items-center">
-                <span className="text-sm font-medium text-stone-600">
-                  Text Color
-                </span>
-                <input
-                  type="color"
-                  className="w-16 h-10 cursor-pointer"
-                  name="textcolor"
-                  value={product.textcolor}
                   onChange={handleChange}
                 />
               </label>
