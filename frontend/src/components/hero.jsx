@@ -59,7 +59,7 @@ const Hero = () => {
                 <ul className="space-y-3 text-stone-700 font-medium">
                   <li
                     className="cursor-pointer hover:text-black"
-                    onClick={() => navigate("/orders")}
+                    onClick={() => navigate("/order-hist")}
                   >
                     My Orders
                   </li>

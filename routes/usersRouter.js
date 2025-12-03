@@ -36,4 +36,14 @@ router.post("/place-order", isLoggedin, async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
+router.get("/orders", isLoggedin, async (req, res) => {
+  try {
+    const orders = await orderModel.find({ user: req.user._id });
+    res.json({ success: true, orders });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
 module.exports = router;

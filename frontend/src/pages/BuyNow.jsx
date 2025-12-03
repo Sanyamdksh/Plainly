@@ -71,11 +71,42 @@ const BuyNow = () => {
     }
   };
 
-  const handleOrder = () => {
-    toast.success("Order Placed");
-    setTimeout(() => {
-      navigate("/home");
-    }, 1500);
+  const handleOrder = async () => {
+    if (!user.address) {
+      toast.error("Please add address before placing an order");
+      return;
+    }
+    const orderBody = {
+      items: [
+        {
+          product: product._id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+        },
+      ],
+      amount: product.price,
+      address: user.address,
+    };
+
+    const res = await fetch("http://localhost:3000/users/place-order", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderBody),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      toast.success("Order Placed");
+      setTimeout(() => {
+        navigate("/home");
+      }, 1500);
+    } else {
+      toast.error("Order Failed");
+    }
   };
 
   if (!user || !product) return <p>Loading...</p>;
