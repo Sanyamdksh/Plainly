@@ -6,7 +6,7 @@ const OrderHist = () => {
     fetch("http://localhost:3000/users/orders", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => setOrders(data.orders));
-  });
+  }, []);
 
   return (
     <div className="bg-stone-200 min-h-screen p-15">
