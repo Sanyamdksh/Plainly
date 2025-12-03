@@ -85,7 +85,7 @@ const BuyNow = () => {
           image: product.image,
         },
       ],
-      amount: product.price,
+      amount: TotalPrice,
       address: user.address,
     };
 

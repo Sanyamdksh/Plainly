@@ -35,7 +35,7 @@ const OrderHist = () => {
               >
                 <div className="flex flex-row">
                   <img
-                    src={item.image}
+                    src={`http://localhost:3000${item.image}`}
                     alt={item.name}
                     className="w-28 h-auto"
                   />
