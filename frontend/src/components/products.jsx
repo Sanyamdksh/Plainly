@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Products = ({ scrollToSection }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+
+  const addToCart = async (productId) => {
+    await fetch("http://localhost:3000/users/cart/add", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId }),
+    });
+    toast.success("Added to cart!");
+  };
 
   useEffect(() => {
     fetch("http://localhost:3000/products/all", {
@@ -65,7 +76,10 @@ const Products = ({ scrollToSection }) => {
                 >
                   Buy Now
                 </button>
-                <button className="bg-gray-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer">
+                <button
+                  className="bg-gray-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer"
+                  onClick={() => addToCart(item._id)}
+                >
                   Add to Cart
                 </button>
               </div>

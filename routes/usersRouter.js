@@ -55,11 +55,26 @@ router.post("/cart/add", isLoggedin, async (req, res) => {
   const exist_item = user.cart.find(
     (item) => item.product.toString() === productId
   );
-  if (exist_item) exist_item.quantity += 1;
+  if (exist_item) exi809mst_item.quantity += 1;
   else user.cart.push({ product: productId });
 
   await user.save();
   res.json({ success: true, message: "Added to cart", cart: user.cart });
+});
+
+router.post("/cart/remove", isLoggedin, async (req, res) => {
+  const { productId } = req.body;
+  let user = await userModel.findById(req.user._id);
+  user.cart = user.cart.filter((item) => item.product.toString() !== productId);
+
+  await user.save();
+  res.json({ success: true, cart: user.cart });
+});
+
+router.get("/cart", isLoggedin, async (req, res) => {
+  const user = await userModel.findById(req.user._id).populate("cart.product");
+
+  res.json({ success: true, cart: user.cart });
 });
 
 module.exports = router;
