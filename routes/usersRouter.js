@@ -46,4 +46,20 @@ router.get("/orders", isLoggedin, async (req, res) => {
   }
 });
 
+router.post("/cart/add", isLoggedin, async (req, res) => {
+  const { productId } = req.body;
+  let user = await userModel.findById(req.user._id);
+
+  //mongoose stores product as objID
+  // productId from frontend is a string
+  const exist_item = user.cart.find(
+    (item) => item.product.toString() === productId
+  );
+  if (exist_item) exist_item.quantity += 1;
+  else user.cart.push({ product: productId });
+
+  await user.save();
+  res.json({ success: true, message: "Added to cart", cart: user.cart });
+});
+
 module.exports = router;

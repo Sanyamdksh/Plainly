@@ -65,6 +65,9 @@ const Products = ({ scrollToSection }) => {
                 >
                   Buy Now
                 </button>
+                <button className="bg-gray-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer">
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))}
