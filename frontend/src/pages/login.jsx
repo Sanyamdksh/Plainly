@@ -21,12 +21,15 @@ const Login = ({ onSwitch }) => {
         { email, password },
         { withCredentials: true }
       );
-      toast.success("Login Successfull");
-      setTimeout(() => {
-        window.location.href = "/home";
-      }, 1000);
+      if (res.data.success) {
+        toast.success("Login Successfull");
+        setTimeout(() => {
+          window.location.href = "/home";
+        }, 1000);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (err) {
-      console.error(err);
       toast.error("something went wrong");
     } finally {
       setLoading(false);

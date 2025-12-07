@@ -29,19 +29,24 @@ module.exports.registerUser = async (req, res) => {
   }
 };
 
+// res.send default status is 200 OK
+// 401 corresponds to invalid credentials
 module.exports.loginUser = async (req, res) => {
   let { email, password } = req.body;
 
   let user = await userModel.findOne({ email });
-  if (!user) return res.send("Invalid Credentials");
+  if (!user)
+    return res
+      .status(401)
+      .json({ success: false, message: "Invalid Credentials" });
 
   bcrypt.compare(password, user.password, (err, result) => {
     if (result) {
       let token = generateToken(user);
-      res.cookie("token", token);
-      res.send("You may login");
+      res.cookie("token", token, { httpOnly: true });
+      res.json({ success: true, message: "Login Successfull" });
     } else {
-      res.send("Invalid Credentials");
+      res.status(401).json({ success: false, message: "Invalid Credentials" });
     }
   });
 };
