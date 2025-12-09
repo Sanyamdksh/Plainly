@@ -26,6 +26,7 @@ const Products = ({ scrollToSection }) => {
       })
       .catch((err) => console.log(err));
   }, []);
+
   useEffect(() => {
     if (scrollToSection) {
       const el = document.getElementById("products-section");
