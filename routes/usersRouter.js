@@ -55,11 +55,30 @@ router.post("/cart/add", isLoggedin, async (req, res) => {
   const exist_item = user.cart.find(
     (item) => item.product.toString() === productId
   );
-  if (exist_item) exi809mst_item.quantity += 1;
+  if (exist_item) exist_item.quantity += 1;
   else user.cart.push({ product: productId });
 
   await user.save();
+  await user.populate("cart.product");
   res.json({ success: true, message: "Added to cart", cart: user.cart });
+});
+
+router.post("/cart/update", isLoggedin, async (req, res) => {
+  const { productId, quantity } = req.body;
+
+  if (quantity < 1)
+    return res
+      .status(400)
+      .json({ success: false, message: "Quantity cannot be less than 1" });
+  let user = await userModel.findById(req.user._id);
+  const item = user.cart.find((i) => i.product.toString() === productId);
+
+  if (!item)
+    return res.status(404).json({ success: false, message: "Not found" });
+  item.quantity = quantity;
+  await user.save();
+  await user.populate("cart.product");
+  res.json({ success: true, cart: user.cart });
 });
 
 router.post("/cart/remove", isLoggedin, async (req, res) => {
