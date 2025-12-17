@@ -3,10 +3,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [loadingItem, setLoadingItem] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/users/cart", {
@@ -114,6 +116,12 @@ const Cart = () => {
           </div>
         ))}
       </div>
+      <button
+        className="ml-5 mt-2 p-4 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-600"
+        onClick={() => navigate("/buynow", { state: { cart } })}
+      >
+        Place Order
+      </button>
     </div>
   );
 };

@@ -6,12 +6,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 const BuyNow = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const product = location.state?.product;
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!product) navigate("/home");
-  }, [product]);
+  const [cart, setCart] = useState([]);
 
   const [user, setUser] = useState({
     fullname: "User",
@@ -20,6 +16,22 @@ const BuyNow = () => {
   });
 
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      const res = await fetch("http://localhost:3000/users/cart", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!data.cart || data.cart.length === 0) {
+        navigate("/home");
+        return;
+      }
+      setCart(data.cart);
+      setLoading(false);
+    };
+    fetchCart();
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:3000/users/profile", {
@@ -76,18 +88,6 @@ const BuyNow = () => {
       toast.error("Please add address before placing an order");
       return;
     }
-    const orderBody = {
-      items: [
-        {
-          product: product._id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-        },
-      ],
-      amount: TotalPrice,
-      address: user.address,
-    };
 
     const res = await fetch("http://localhost:3000/users/place-order", {
       method: "POST",
@@ -95,7 +95,9 @@ const BuyNow = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(orderBody),
+      body: JSON.stringify({
+        address: user.address,
+      }),
     });
 
     const data = await res.json();
@@ -109,9 +111,14 @@ const BuyNow = () => {
     }
   };
 
-  if (!user || !product) return <p>Loading...</p>;
-
-  const TotalPrice = product.price - (product.price * product.discount) / 100;
+  const TotalPrice = cart.reduce(
+    (sum, item) =>
+      sum +
+      (item.product.price -
+        (item.product.price * (item.product.discount || 0)) / 100) *
+        item.quantity,
+    0
+  );
 
   return (
     <div className="min-h-screen bg-slate-100 p-10">
@@ -279,8 +286,12 @@ const BuyNow = () => {
             </div>
 
             <button
-              className="mt-6 ml-4 bg-stone-700 text-white px-7 py-3 rounded-lg hover:bg-stone-900 transition cursor-pointer"
-              onClick={handleOrder}
+              className={
+                !user.address
+                  ? "mt-6 ml-4 bg-stone-600 text-white px-7 py-3 rounded-lg cursor-not-allowed"
+                  : "mt-6 ml-4 bg-stone-700 text-white px-7 py-3 rounded-lg hover:bg-stone-900 transition cursor-pointer"
+              }
+              onClick={!user.address ? "" : handleOrder}
             >
               Place Order
             </button>
@@ -288,18 +299,23 @@ const BuyNow = () => {
         </div>
         <div className="w-[60%] bg-white rounded-md shadow-md border p-5 h-fit">
           <h3 className="text-2xl font-semibold mb-4">Order Summary</h3>
-          <div className="flex flex-row justify-between">
-            <div className="flex flex-col justify-center ">
-              <p className="text-lg font-medium">{product.name}</p>
-              <p>Price: ₹{product.price}</p>
-              <p>Discount: {product.discount}%</p>
+          {cart.map((item) => (
+            <div className="flex flex-row justify-between">
+              <div
+                key={item.product._id}
+                className="flex flex-col justify-center "
+              >
+                <p className="text-lg font-medium">{item.product.name}</p>
+                <p>Qty: {item.quantity}</p>
+                <p>₹{item.product.price * item.quantity}</p>
+              </div>
+              <img
+                src={`http://localhost:3000${item.product.image}`}
+                alt={item.product.name}
+                className="w-24 h-24 mr-10"
+              />
             </div>
-            <img
-              src={`http://localhost:3000${product.image}`}
-              alt={product.name}
-              className="w-24 h-24 mr-10"
-            />
-          </div>
+          ))}
           <hr className="my-3" />
           <p className="font-semibold text-xl">Total: ₹{TotalPrice}</p>
         </div>

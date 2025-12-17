@@ -65,18 +65,26 @@ const Products = ({ scrollToSection }) => {
               <h3 className="text-xl font-semibold mt-4 text-gray-700">
                 {item.name}
               </h3>
+              <div className="flex flex-row gap-x-2 items-center">
+                <p className="text-sm font-semibold text-black line-through">
+                  Rs. {item.price}
+                </p>
+                <p className="text-xs font-semibold text-yellow-700">
+                  {item.discount}% off
+                </p>
+              </div>
               <p className="text-lg font-semibold text-black">
-                Rs. {item.price}
+                Rs. {item.price - (item.price * item.discount) / 100}
               </p>
               <div className="flex flex-col items-center mt-5 gap-3">
-                <button
+                {/* <button
                   className="bg-red-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer"
                   onClick={() =>
                     navigate("/buynow", { state: { product: item } })
                   }
                 >
                   Buy Now
-                </button>
+                </button> */}
                 <button
                   className="bg-gray-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer"
                   onClick={() => addToCart(item._id)}
