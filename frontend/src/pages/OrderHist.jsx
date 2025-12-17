@@ -31,17 +31,22 @@ const OrderHist = () => {
             {order.items.map((item, index) => (
               <div
                 key={index}
-                className="bg-stone-100 rounded-lg shadow-sm w-[75%] border border-gray-200 mb-5 p-2"
+                className="bg-stone-100 rounded-lg shadow-sm w-[75%] border border-gray-200 mb-5 p-2 bg-stone-100"
               >
                 <div className="flex flex-row">
                   <img
-                    src={`http://localhost:3000${item.image}`}
-                    alt={item.name}
+                    src={`http://localhost:3000${item.product.image}`}
+                    alt={item.product.name}
                     className="w-28 h-auto"
                   />
                   <div className="flex flex-col justify-center p-4">
-                    <p className="text-lg text-gray-700">{item.name}</p>
-                    <p className="text-lg font-semibold">Rs {item.price}</p>
+                    <p className="text-lg text-gray-700">{item.product.name}</p>
+                    <p className="text-sm text-gray-500">
+                      Qty: {item.quantity}
+                    </p>
+                    <p className="text-lg font-semibold">
+                      Rs {(item.product?.price || 0) * item.quantity}
+                    </p>
                   </div>
                 </div>
               </div>

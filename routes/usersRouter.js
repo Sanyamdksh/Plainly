@@ -56,7 +56,9 @@ router.post("/place-order", isLoggedin, async (req, res) => {
 
 router.get("/orders", isLoggedin, async (req, res) => {
   try {
-    const orders = await orderModel.find({ user: req.user._id });
+    const orders = await orderModel
+      .find({ user: req.user._id })
+      .populate("items.product");
     res.json({ success: true, orders });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server Error" });
