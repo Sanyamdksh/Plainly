@@ -83,8 +83,10 @@ router.post("/cart/update", isLoggedin, async (req, res) => {
 
 router.post("/cart/remove", isLoggedin, async (req, res) => {
   const { productId } = req.body;
-  let user = await userModel.findById(req.user._id);
-  user.cart = user.cart.filter((item) => item.product.toString() !== productId);
+  let user = await userModel.findById(req.user._id).populate("cart.product");
+  user.cart = user.cart.filter(
+    (item) => item.product._id.toString() !== productId
+  );
 
   await user.save();
   res.json({ success: true, cart: user.cart });

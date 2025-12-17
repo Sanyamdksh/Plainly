@@ -39,7 +39,10 @@ const Hero = () => {
             className="cursor-pointer hover:text-red-700 hover:scale-125 transition-transform duration-200 text-red-600"
             onClick={handleLogout}
           />
-          <RiShoppingCart2Line className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200" />
+          <RiShoppingCart2Line
+            className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200"
+            onClick={() => navigate("/cart")}
+          />
           <div className="profile">
             <CgProfile
               className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200"

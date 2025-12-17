@@ -52,12 +52,12 @@ const Products = ({ scrollToSection }) => {
               className="rounded-2xl p-6 shadow-md hover:shadow-lg transition-all bg-stone-100 border border-gray-300"
             >
               <div
-                className="h-48 w-full rounded-xl shadow-sm flex items-end justify-center"
+                className="h-60 w-full rounded-xl shadow-sm flex items-end justify-center"
                 style={{ backgroundColor: item.bgcolor }}
               >
                 <img
                   src={`http://localhost:3000${item.image}`}
-                  className="h-48 w-48 object-cover shadow-md "
+                  className="h-60 w-60 object-cover shadow-md "
                   alt={item.name}
                 />
               </div>
