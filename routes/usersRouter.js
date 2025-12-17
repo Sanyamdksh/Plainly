@@ -18,18 +18,35 @@ router.post("/save-add", isLoggedin, saveAddress);
 
 router.post("/place-order", isLoggedin, async (req, res) => {
   try {
-    const { items, amount, address } = req.body;
-    if (!items || !amount || !address) {
+    const { address } = req.body;
+    if (!address) {
       return res
         .status(400)
-        .json({ success: false, message: "Missing fields" });
+        .json({ success: false, message: "Address required" });
     }
+    const user = await userModel
+      .findById(req.user._id)
+      .populate("cart.product");
+
+    if (!user || user.cart.length === 0) {
+      return res.status(400).json({ success: false, message: "Cart is empty" });
+    }
+    const amount = user.cart.reduce((sum, item) => {
+      const priceAfterDiscount =
+        item.product.price -
+        (item.product.price * (item.product.discount || 0)) / 100;
+
+      return sum + priceAfterDiscount * item.quantity;
+    }, 0);
+
     const order = await orderModel.create({
-      user: req.user._id,
-      items,
+      user: user._id,
+      items: user.cart,
       amount,
       address,
     });
+    user.cart = [];
+    await user.save();
     res.json({ success: true, message: "order placed successfully", order });
   } catch (err) {
     console.log(err);

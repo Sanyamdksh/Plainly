@@ -300,20 +300,22 @@ const BuyNow = () => {
         <div className="w-[60%] bg-white rounded-md shadow-md border p-5 h-fit">
           <h3 className="text-2xl font-semibold mb-4">Order Summary</h3>
           {cart.map((item) => (
-            <div className="flex flex-row justify-between">
-              <div
-                key={item.product._id}
-                className="flex flex-col justify-center "
-              >
-                <p className="text-lg font-medium">{item.product.name}</p>
-                <p>Qty: {item.quantity}</p>
-                <p>₹{item.product.price * item.quantity}</p>
+            <div className="flex flex-col mt-2 rounded-md border border-stone-200 shadow-sm p-2">
+              <div className="flex flex-row justify-between">
+                <div
+                  key={item.product._id}
+                  className="flex flex-col justify-center "
+                >
+                  <p className="text-lg font-medium">{item.product.name}</p>
+                  <p>Qty: {item.quantity}</p>
+                  <p>₹{item.product.price * item.quantity}</p>
+                </div>
+                <img
+                  src={`http://localhost:3000${item.product.image}`}
+                  alt={item.product.name}
+                  className="w-24 h-24 mr-10"
+                />
               </div>
-              <img
-                src={`http://localhost:3000${item.product.image}`}
-                alt={item.product.name}
-                className="w-24 h-24 mr-10"
-              />
             </div>
           ))}
           <hr className="my-3" />
