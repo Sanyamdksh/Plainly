@@ -4,10 +4,13 @@ import { CgProfile } from "react-icons/cg";
 import { TbLogout2 } from "react-icons/tb";
 import main from "../assets/main.webp";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Hero = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState([]);
+
   const handleLogout = async () => {
     await fetch("http://localhost:3000/logout", {
       method: "GET",
@@ -15,6 +18,16 @@ const Hero = () => {
     });
     navigate("/");
   };
+
+  useEffect(() => {
+    fetch("http://localhost:3000/users/profile", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setUser(data.user))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="min-h-screen w-full bg-amber-50">
@@ -56,9 +69,9 @@ const Hero = () => {
                 onMouseLeave={() => setOpen(false)}
               >
                 <h3 className="text-lg font-semibold text-stone-700">
-                  Hello, User
+                  Hello, {user.fullname}
                 </h3>
-                <p className="text-sm text-stone-500 mb-4">abc@gmail.com</p>
+                <p className="text-sm text-stone-500 mb-4">{user.email}</p>
                 <ul className="space-y-3 text-stone-700 font-medium">
                   <li
                     className="cursor-pointer hover:text-black"
@@ -71,12 +84,6 @@ const Hero = () => {
                     onClick={() => navigate("/cart")}
                   >
                     Cart
-                  </li>
-                  <li
-                    className="cursor-pointer hover:text-black"
-                    onClick={() => navigate("/profile")}
-                  >
-                    Edit Profile
                   </li>
                   <li
                     className="cursor-pointer text-red-600 hover:text-red-700"
