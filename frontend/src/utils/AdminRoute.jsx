@@ -1,11 +1,12 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-const AdminRoute = ({ user }) => {
-  if (!user) return <Navigate to="../pages/AuthContainer" replace />;
+const AdminRoute = ({ user, loading }) => {
+  console.log("AdminRoute user:", user);
 
-  if (user.role !== "admin")
-    return <Navigate to="../pages/admin/AccessDenied" />;
+  if (loading) return null;
+  if (!user) return <Navigate to="/access-denied" replace />;
+  if (user.role !== "admin") return <Navigate to="/access-denied" replace />;
 
   return <Outlet />;
 };

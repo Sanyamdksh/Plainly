@@ -12,8 +12,25 @@ import AccessDenied from "./pages/admin/AccessDenied";
 import AdminRoute from "./utils/AdminRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+import { useEffect } from "react";
 
-function App({ user }) {
+function App() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/users/profile", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data.user);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
   return (
     <Router>
       <Routes>
@@ -41,7 +58,7 @@ function App({ user }) {
         <Route path="/cart" element={<Cart />} />
 
         <Route path="/access-denied" element={<AccessDenied />} />
-        <Route element={<AdminRoute user={user} />}>
+        <Route element={<AdminRoute user={user} loading={loading} />}>
           <Route path="/owner/dashboard" element={<DashLayout />} />
           <Route path="/owner/add-product" element={<AddProduct />} />
         </Route>
