@@ -21,8 +21,6 @@ const userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "order",
   },
-  // contact: Number,
-  // picture: String,
   address: {
     line1: String,
     line2: String,

@@ -31,7 +31,7 @@ const OrderHist = () => {
             {order.items.map((item, index) => (
               <div
                 key={index}
-                className="bg-stone-100 rounded-lg shadow-sm w-[75%] border border-gray-200 mb-5 p-2 bg-stone-100"
+                className="rounded-lg shadow-sm w-[75%] border border-gray-200 mb-5 p-2 bg-stone-100"
               >
                 <div className="flex flex-row">
                   <img
