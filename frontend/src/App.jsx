@@ -8,10 +8,12 @@ import AddProduct from "./pages/admin/addProduct";
 import BuyNow from "./pages/BuyNow";
 import Order from "./pages/OrderHist";
 import Cart from "./pages/Cart";
+import AccessDenied from "./pages/admin/AccessDenied";
+import AdminRoute from "./utils/AdminRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+function App({ user }) {
   return (
     <Router>
       <Routes>
@@ -34,11 +36,15 @@ function App() {
             </>
           }
         />
-        <Route path="/owner/dashboard" element={<DashLayout />} />
-        <Route path="/owner/add-product" element={<AddProduct />} />
         <Route path="/buynow" element={<BuyNow />} />
         <Route path="/order-hist" element={<Order />} />
         <Route path="/cart" element={<Cart />} />
+
+        <Route path="/access-denied" element={<AccessDenied />} />
+        <Route element={<AdminRoute user={user} />}>
+          <Route path="/owner/dashboard" element={<DashLayout />} />
+          <Route path="/owner/add-product" element={<AddProduct />} />
+        </Route>
       </Routes>
       <ToastContainer position="bottom-right" autoClose={2000} />
     </Router>

@@ -106,7 +106,7 @@ const AddProduct = () => {
               type="file"
               className="w-full bg-stone-100 p-3 border rounded-lg flex justify-between mt-2"
               onChange={handleImageChange}
-              accept="image/"
+              accept="image/*"
               required
             />
             <button
