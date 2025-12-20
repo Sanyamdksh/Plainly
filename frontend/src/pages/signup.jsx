@@ -73,7 +73,7 @@ const Signup = ({ onSwitch }) => {
             className={`p-3 text-amber-50 rounded-md transition ${
               loading
                 ? "bg-stone-400 cursor-not-allowed"
-                : "bg-stone-700  hover:bg-stone-800 "
+                : "bg-stone-700  hover:bg-stone-800 cursor-pointer"
             }`}
           >
             {loading ? "Signining up..." : "Sign Up"}
