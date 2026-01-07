@@ -5,6 +5,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Empty_cart from "../assets/empty_cart.gif";
+import Logo from "../assets/logo.png";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -63,7 +64,17 @@ const Cart = () => {
   console.log(cart);
   return (
     <div className="min-h-screen bg-slate-100 p-10">
-      <h2 className="text-4xl font-semibold">Cart Items</h2>
+      <div
+        onClick={() => navigate("/home")}
+        className="flex items-center gap-1 cursor-pointer group"
+      >
+        <img src={Logo} alt="Plainly logo" className="h-10 w-auto" />
+
+        <h2 className="font-bold text-3xl text-stone-700 group-hover:text-stone-900 transition">
+          Plainly
+        </h2>
+      </div>
+      <h2 className="text-3xl font-semibold mt-2 p-1">Cart Items</h2>
       {cart.length > 0 && (
         <div className="flex flex-col gap-y-5 p-4">
           {cart.map((item) => (

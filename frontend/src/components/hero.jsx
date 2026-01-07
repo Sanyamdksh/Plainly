@@ -35,7 +35,7 @@ const Hero = () => {
       {/* NAVBAR */}
       <div className="flex flex-row items-center p-12 justify-between">
         <div
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
           className="flex items-center gap-1 cursor-pointer group"
         >
           <img src={Logo} alt="Plainly logo" className="h-10 w-auto" />

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Logo from "../assets/logo.png";
 
 const OrderHist = () => {
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetch("http://localhost:3000/users/orders", { credentials: "include" })
       .then((res) => res.json())
@@ -9,12 +13,22 @@ const OrderHist = () => {
   }, []);
 
   return (
-    <div className="bg-stone-200 min-h-screen p-15">
-      <h2 className="text-3xl font-semibold text-stone-800 mb-5">My Orders</h2>
+    <div className="bg-stone-200 min-h-screen p-10">
+      <div
+        onClick={() => navigate("/home")}
+        className="flex items-center gap-1 cursor-pointer group"
+      >
+        <img src={Logo} alt="Plainly logo" className="h-10 w-auto" />
+
+        <h2 className="font-bold text-3xl text-stone-700 group-hover:text-stone-900 transition">
+          Plainly
+        </h2>
+      </div>
+      <h2 className="text-3xl font-semibold text-stone-800  p-2">My Orders</h2>
       {orders.map((order) => (
         <div
           key={order._id}
-          className="bg-stone-100 p-5 rounded-lg shadow-sm hover:shadow-md w-[75%] mt-4 border border-gray-300 "
+          className="bg-stone-100 p-5 rounded-lg shadow-sm hover:shadow-md w-[75%] mt-2 border border-gray-300 ml-2"
         >
           <p className="text-xl font-bold"># {order._id.slice(-6)}</p>
           <p className="text-lg font-semibold">
