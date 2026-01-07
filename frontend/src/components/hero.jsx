@@ -5,6 +5,7 @@ import { TbLogout2 } from "react-icons/tb";
 import main from "../assets/main.webp";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Logo from "../assets/logo.png";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -33,9 +34,16 @@ const Hero = () => {
     <div className="min-h-screen w-full bg-amber-50">
       {/* NAVBAR */}
       <div className="flex flex-row items-center p-12 justify-between">
-        <h2 className="font-bold text-4xl text-stone-700 cursor-pointer">
-          Plainly
-        </h2>
+        <div
+          onClick={() => navigate("/")}
+          className="flex items-center gap-1 cursor-pointer group"
+        >
+          <img src={Logo} alt="Plainly logo" className="h-10 w-auto" />
+
+          <h2 className="font-bold text-3xl text-stone-700 group-hover:text-stone-900 transition">
+            Plainly
+          </h2>
+        </div>
         <div className="gap-x-10 flex flex-row justify-center mt-2 text-stone-700">
           <p className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer">
             Product
