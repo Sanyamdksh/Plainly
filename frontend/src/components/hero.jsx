@@ -33,7 +33,7 @@ const Hero = () => {
   return (
     <div className="min-h-screen w-full bg-amber-50">
       {/* NAVBAR */}
-      <div className="flex flex-row items-center p-12 justify-between">
+      <div className="flex flex-row items-center px-12 pt-5 justify-between py-10">
         <div
           onClick={() => navigate("/home")}
           className="flex items-center gap-1 cursor-pointer group"
