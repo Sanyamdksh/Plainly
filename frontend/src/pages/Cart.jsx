@@ -101,8 +101,14 @@ const Cart = () => {
                       <p className="text-lg font-semibold text-gray-700">
                         {item.product.name}
                       </p>
+                      <p className="text-sm font-semibold text-black line-through">
+                        Rs. {item.product.price}
+                      </p>
                       <p className="text-xl font-semibold">
-                        Rs {item.product.price}
+                        Rs{" "}
+                        {(item.product.price -
+                          (item.product.price * item.product.discount) / 100) *
+                          item.quantity}
                       </p>
                       <div className="flex flex-row gap-x-5 mt-2">
                         <button

@@ -307,7 +307,12 @@ const BuyNow = () => {
                 >
                   <p className="text-lg font-medium">{item.product.name}</p>
                   <p>Qty: {item.quantity}</p>
-                  <p>₹{item.product.price * item.quantity}</p>
+                  <p>
+                    ₹
+                    {(item.product.price -
+                      (item.product.price * item.product.discount) / 100) *
+                      item.quantity}
+                  </p>
                 </div>
                 <img
                   src={`http://localhost:3000${item.product.image}`}
