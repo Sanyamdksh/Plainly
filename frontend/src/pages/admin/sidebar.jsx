@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
-    <div className="w-64 min-h-screen bg-stone-800 text-white p-6 flex flex-col gap-6">
+    <div className="w-64 h-screen bg-stone-800 text-white p-6 flex flex-col gap-6">
       <h2 className="text-3xl font-bold">Owner</h2>
       <Link className="hover:text-stone-300 text-lg" to="/owner/dashboard">
         Dashboard

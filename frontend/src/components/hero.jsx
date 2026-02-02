@@ -81,18 +81,30 @@ const Hero = () => {
                 </h3>
                 <p className="text-sm text-stone-500 mb-4">{user.email}</p>
                 <ul className="space-y-3 text-stone-700 font-medium">
-                  <li
-                    className="cursor-pointer hover:text-black"
-                    onClick={() => navigate("/order-hist")}
-                  >
-                    My Orders
-                  </li>
-                  <li
-                    className="cursor-pointer hover:text-black"
-                    onClick={() => navigate("/cart")}
-                  >
-                    Cart
-                  </li>
+                  {user.role == "user" && (
+                    <li
+                      className="cursor-pointer hover:text-black"
+                      onClick={() => navigate("/order-hist")}
+                    >
+                      My Orders
+                    </li>
+                  )}
+                  {user.role == "admin" && (
+                    <li
+                      className="cursor-pointer hover:text-black"
+                      onClick={() => navigate("/owner/dashboard")}
+                    >
+                      My Dashboard
+                    </li>
+                  )}
+                  {user.role == "user" && (
+                    <li
+                      className="cursor-pointer hover:text-black"
+                      onClick={() => navigate("/cart")}
+                    >
+                      Cart
+                    </li>
+                  )}
                   <li
                     className="cursor-pointer text-red-600 hover:text-red-700"
                     onClick={handleLogout}
