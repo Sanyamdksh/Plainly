@@ -41,7 +41,7 @@ function App() {
           element={
             <>
               <Landing />
-              {user.role == "user" && <Products />}
+              {user?.role == "user" && <Products />}
             </>
           }
         />

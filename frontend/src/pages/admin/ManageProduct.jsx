@@ -5,7 +5,9 @@ import Products from "../../components/products";
 const ManageProduct = () => {
   return (
     <Dashboard>
-      <Products />
+      <div>
+        <Products variant="admin" />
+      </div>
     </Dashboard>
   );
 };

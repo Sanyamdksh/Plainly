@@ -2,19 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Products = ({ scrollToSection }) => {
+const Products = ({ scrollToSection = false, variant = "store" }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
 
+  const isAdmin = variant === "admin";
+
+  // Fetch products
   useEffect(() => {
-    fetch("http://localhost:3000/users/profile", {
+    fetch("http://localhost:3000/products/all", {
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => setUser(data.user))
-      .catch((err) => console.log(err));
+      .then((data) => setProducts(data.products || []))
+      .catch((err) => console.error(err));
   }, []);
+
+  // Scroll helper (store only)
+  useEffect(() => {
+    if (!isAdmin && scrollToSection) {
+      const el = document.getElementById("products-section");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [scrollToSection, isAdmin]);
 
   const addToCart = async (productId) => {
     await fetch("http://localhost:3000/users/cart/add", {
@@ -26,60 +36,64 @@ const Products = ({ scrollToSection }) => {
     toast.success("Added to cart!");
   };
 
-  useEffect(() => {
-    fetch("http://localhost:3000/products/all", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.products);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    if (scrollToSection) {
-      const el = document.getElementById("products-section");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [scrollToSection]);
-
   return (
-    <div id="products-section" className="min-h-screen w-full bg-white">
-      <div className="p-8">
-        {user.role == "user" && (
-          <div>
-            <h2 className="text-4xl font-semibold text-[#2C2C2C] mb-6">
+    <div
+      id="products-section"
+      className={`${isAdmin ? "w-full" : "min-h-screen"} bg-white`}
+    >
+      <div className={`${isAdmin ? "p-2" : "p-8"}`}>
+        {/* Store Header */}
+        {!isAdmin && (
+          <div className="mb-8">
+            <h2 className="text-4xl font-semibold text-[#2C2C2C] mb-4">
               Explore Our Wide Range of Products
             </h2>
             <p className="text-lg text-stone-800 max-w-2xl">
               Discover items that combine elegance, functionality, and
-              sustainability all designed to complement your lifestyle.
+              sustainability thoughtfully designed to complement your lifestyle.
             </p>
           </div>
         )}
 
-        <div className="grid grid-cols-3 mt-10 gap-6">
+        {/* Product Grid */}
+        <div
+          className={`grid gap-6 ${
+            isAdmin
+              ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          }`}
+        >
           {products.map((item) => (
             <div
               key={item._id}
-              className="rounded-2xl p-6 shadow-md hover:shadow-lg transition-all bg-stone-100 border border-gray-300"
+              className={`transition ${
+                isAdmin
+                  ? "bg-white border border-gray-200 rounded-xl shadow-sm p-5"
+                  : "bg-stone-100 border border-gray-300 rounded-2xl shadow-md hover:shadow-lg p-6"
+              }`}
             >
+              {/* Image */}
               <div
-                className="h-60 w-full rounded-xl shadow-sm flex items-end justify-center"
-                style={{ backgroundColor: item.bgcolor }}
+                className={`flex items-center justify-center overflow-hidden ${
+                  isAdmin ? "h-40 rounded-lg bg-gray-50" : "h-60 rounded-xl"
+                }`}
+                style={!isAdmin ? { backgroundColor: item.bgcolor } : {}}
               >
                 <img
                   src={`http://localhost:3000${item.image}`}
-                  className="h-60 w-60 object-cover shadow-md "
                   alt={item.name}
+                  className={`object-cover ${
+                    isAdmin ? "h-36 w-36" : "h-60 w-60 shadow-md"
+                  }`}
                 />
               </div>
 
-              <h3 className="text-xl font-semibold mt-4 text-gray-700">
+              {/* Details */}
+              <h3 className="text-lg font-semibold mt-4 text-gray-700">
                 {item.name}
               </h3>
-              <div className="flex flex-row gap-x-2 items-center">
+
+              <div className="flex items-center gap-2 mt-1">
                 <p className="text-sm font-semibold text-black line-through">
                   Rs. {item.price}
                 </p>
@@ -87,24 +101,37 @@ const Products = ({ scrollToSection }) => {
                   {item.discount}% off
                 </p>
               </div>
-              <p className="text-lg font-semibold text-black">
+
+              <p className="text-lg font-semibold text-black mt-1">
                 Rs. {item.price - (item.price * item.discount) / 100}
               </p>
-              <div className="flex flex-col items-center mt-5 gap-3">
-                {/* <button
-                  className="bg-red-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer"
-                  onClick={() =>
-                    navigate("/buynow", { state: { product: item } })
-                  }
-                >
-                  Buy Now
-                </button> */}
-                <button
-                  className="bg-gray-400 text-white font-medium py-2 rounded-lg w-3/4 hover:bg-red-500 transition cursor-pointer"
-                  onClick={() => addToCart(item._id)}
-                >
-                  Add to Cart
-                </button>
+
+              {/* Actions */}
+              <div className="mt-4">
+                {!isAdmin && (
+                  <button
+                    className="bg-gray-400 text-white font-medium py-2 rounded-lg w-full hover:bg-red-500 transition"
+                    onClick={() => addToCart(item._id)}
+                  >
+                    Add to Cart
+                  </button>
+                )}
+
+                {isAdmin && (
+                  <div className="flex justify-end gap-4 text-sm">
+                    <button
+                      className="text-blue-600 hover:underline"
+                      onClick={() =>
+                        navigate(`/owner/edit-product/${item._id}`)
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button className="text-red-600 hover:underline">
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           ))}
