@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import ManageProduct from "./pages/admin/ManageProduct";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,7 +41,7 @@ function App() {
           element={
             <>
               <Landing />
-              <Products />
+              {user.role == "user" && <Products />}
             </>
           }
         />
@@ -61,6 +62,7 @@ function App() {
         <Route element={<AdminRoute user={user} loading={loading} />}>
           <Route path="/owner/dashboard" element={<DashLayout />} />
           <Route path="/owner/add-product" element={<AddProduct />} />
+          <Route path="/owner/manage-products" element={<ManageProduct />} />
         </Route>
       </Routes>
       <ToastContainer position="bottom-right" autoClose={2000} />

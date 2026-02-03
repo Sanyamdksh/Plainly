@@ -5,6 +5,16 @@ import { toast } from "react-toastify";
 const Products = ({ scrollToSection }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/users/profile", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setUser(data.user))
+      .catch((err) => console.log(err));
+  }, []);
 
   const addToCart = async (productId) => {
     await fetch("http://localhost:3000/users/cart/add", {
@@ -37,13 +47,17 @@ const Products = ({ scrollToSection }) => {
   return (
     <div id="products-section" className="min-h-screen w-full bg-white">
       <div className="p-8">
-        <h2 className="text-4xl font-semibold text-[#2C2C2C] mb-6">
-          Explore Our Wide Range of Products
-        </h2>
-        <p className="text-lg text-stone-800 max-w-2xl">
-          Discover items that combine elegance, functionality, and
-          sustainability all designed to complement your lifestyle.
-        </p>
+        {user.role == "user" && (
+          <div>
+            <h2 className="text-4xl font-semibold text-[#2C2C2C] mb-6">
+              Explore Our Wide Range of Products
+            </h2>
+            <p className="text-lg text-stone-800 max-w-2xl">
+              Discover items that combine elegance, functionality, and
+              sustainability all designed to complement your lifestyle.
+            </p>
+          </div>
+        )}
 
         <div className="grid grid-cols-3 mt-10 gap-6">
           {products.map((item) => (
