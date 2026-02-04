@@ -12,7 +12,7 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-      let { name, price, discount, bgcolor, panelcolor, textcolor } = req.body;
+      let { name, price, discount, bgcolor } = req.body;
       let product = await productModel.create({
         image: `/uploads/${req.file.filename}`,
         name,
@@ -27,7 +27,34 @@ router.post(
     } catch (err) {
       res.send(err.message);
     }
-  }
+  },
+);
+
+router.put(
+  "/:id",
+  isLoggedin,
+  admin,
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      let { name, price, discount, bgcolor } = req.body;
+      const updateData = { name, price, discount, bgcolor };
+      if (req.file) {
+        updateData.image = `/uploads/${req.file.filename}`;
+      }
+      const updatedProduct = await productModel.findByIdAndUpdate(
+        req.params.id,
+        updateData,
+        { new: true },
+      );
+      if (!updatedProduct) {
+        return res.status(400).json({ message: "Product not found" });
+      }
+      res.json({ product: updatedProduct });
+    } catch (err) {
+      res.status(500).json({ message: "Server error" });
+    }
+  },
 );
 
 router.get("/all", async (req, res) => {

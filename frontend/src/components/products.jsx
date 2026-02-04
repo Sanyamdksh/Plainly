@@ -83,7 +83,7 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
                   src={`http://localhost:3000${item.image}`}
                   alt={item.name}
                   className={`object-cover ${
-                    isAdmin ? "h-36 w-36" : "h-60 w-60 shadow-md"
+                    isAdmin ? "h-38 w-38" : "h-60 w-60 shadow-md"
                   }`}
                 />
               </div>
@@ -120,14 +120,14 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
                 {isAdmin && (
                   <div className="flex justify-end gap-4 text-sm">
                     <button
-                      className="text-blue-600 hover:underline"
+                      className="text-blue-600 hover:underline cursor-pointer"
                       onClick={() =>
                         navigate(`/owner/edit-product/${item._id}`)
                       }
                     >
                       Edit
                     </button>
-                    <button className="text-red-600 hover:underline">
+                    <button className="text-red-600 hover:underline cursor-pointer">
                       Delete
                     </button>
                   </div>

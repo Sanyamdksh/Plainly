@@ -1,16 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dashboard from "./dashboard";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
-    discount: 0,
+    discount: "",
     image: null,
     bgcolor: "#ffffff",
   });
+
+  const [searchParams] = useSearchParams();
+  const productId = searchParams.get("id");
+  const isEdit = Boolean(productId);
+
+  useEffect(() => {
+    if (!isEdit) return;
+    fetch(`http://localhost:3000/products/${productId}`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProduct({
+          name: data.product.name,
+          price: data.product.price,
+          discount: data.product.discount,
+          bgcolor: data.product.bgcolor,
+          image: null,
+        });
+      })
+      .catch(() => toast.error("Failed to load product"));
+  }, [isEdit, productId]);
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -38,9 +61,6 @@ const AddProduct = () => {
       });
       if (res.ok) {
         toast.success("Product created successfully");
-        setTimeout(() => {
-          window.location.href = "/products";
-        }, 1500);
       } else {
         toast.error("Failed to create product");
       }
