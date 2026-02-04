@@ -25,7 +25,7 @@ router.post(
         product,
       });
     } catch (err) {
-      res.send(err.message);
+      res.status(500).json({ message: err.message });
     }
   },
 );
@@ -36,6 +36,10 @@ router.put(
   admin,
   upload.single("image"),
   async (req, res) => {
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+    console.log("USER:", req.user);
+
     try {
       let { name, price, discount, bgcolor } = req.body;
       const updateData = { name, price, discount, bgcolor };
@@ -48,7 +52,7 @@ router.put(
         { new: true },
       );
       if (!updatedProduct) {
-        return res.status(400).json({ message: "Product not found" });
+        return res.status(404).json({ message: "Product not found" });
       }
       res.json({ product: updatedProduct });
     } catch (err) {
@@ -57,12 +61,38 @@ router.put(
   },
 );
 
+router.delete("/:id", isLoggedin, admin, async (req, res) => {
+  try {
+    const deletedProduct = await productModel.findByIdAndDelete(req.params.id);
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json({ message: "Product deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 router.get("/all", async (req, res) => {
   try {
     let products = await productModel.find();
     res.json({ products });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await productModel.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({ product });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 });
 

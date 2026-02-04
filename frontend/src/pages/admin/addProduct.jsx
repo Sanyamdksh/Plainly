@@ -51,16 +51,26 @@ const AddProduct = () => {
     formData.append("price", product.price);
     formData.append("discount", product.discount);
     formData.append("bgcolor", product.bgcolor);
-    formData.append("image", product.image);
+
+    if (product.image) formData.append("image", product.image);
 
     try {
-      let res = await fetch("http://localhost:3000/products/create", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+      let res = await fetch(
+        isEdit
+          ? `http://localhost:3000/products/${productId}`
+          : "http://localhost:3000/products/create",
+        {
+          method: isEdit ? "PUT" : "POST",
+          body: formData,
+          credentials: "include",
+        },
+      );
       if (res.ok) {
-        toast.success("Product created successfully");
+        toast.success(
+          isEdit
+            ? "Product updated successfully"
+            : "Product created successfully",
+        );
       } else {
         toast.error("Failed to create product");
       }
@@ -75,7 +85,7 @@ const AddProduct = () => {
       <form onSubmit={handleSubmit}>
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl font-semibold text-stone-700 mb-6">
-            Add new product
+            {isEdit ? "Edit Product" : "Add new product"}
           </h2>
           <div className="bg-white p-6 rounded-lg shadow-md max-w-lg space-y-5">
             <input
@@ -127,13 +137,13 @@ const AddProduct = () => {
               className="w-full bg-stone-100 p-3 border rounded-lg flex justify-between mt-2"
               onChange={handleImageChange}
               accept="image/*"
-              required
+              required={!isEdit}
             />
             <button
               className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900"
               type="submit"
             >
-              Add Product
+              {isEdit ? "Save changes" : "Add Product"}
             </button>
           </div>
         </div>

@@ -36,6 +36,23 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
     toast.success("Added to cart!");
   };
 
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Do you want to delete this product?");
+    if (!confirmDelete) return;
+    try {
+      const res = await fetch(`http://localhost:3000/products/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error();
+      toast.success("Product deleted successfully");
+
+      setProducts((prev) => prev.filter((p) => p._id !== id));
+    } catch (err) {
+      toast.error("Failed to delete the product");
+    }
+  };
+
   return (
     <div
       id="products-section"
@@ -122,12 +139,15 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
                     <button
                       className="text-blue-600 hover:underline cursor-pointer"
                       onClick={() =>
-                        navigate(`/owner/edit-product/${item._id}`)
+                        navigate(`/owner/add-product?id=${item._id}`)
                       }
                     >
                       Edit
                     </button>
-                    <button className="text-red-600 hover:underline cursor-pointer">
+                    <button
+                      className="text-red-600 hover:underline cursor-pointer"
+                      onClick={() => handleDelete(item._id)}
+                    >
                       Delete
                     </button>
                   </div>
