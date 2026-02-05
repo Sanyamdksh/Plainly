@@ -1,8 +1,12 @@
-import Signup from "./pages/signup";
-import Landing from "./components/hero";
-import Products from "./components/products";
-import AuthContainer from "./pages/AuthContainer";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import Signup from "./pages/signup";
+import Landing from "./Landing/hero";
+import Products from "./Landing/products";
+import AuthContainer from "./pages/AuthContainer";
 import DashLayout from "./pages/admin/dashLayout";
 import AddProduct from "./pages/admin/addProduct";
 import BuyNow from "./pages/BuyNow";
@@ -10,11 +14,8 @@ import Order from "./pages/OrderHist";
 import Cart from "./pages/Cart";
 import AccessDenied from "./pages/admin/AccessDenied";
 import AdminRoute from "./utils/AdminRoute";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
-import { useEffect } from "react";
 import ManageProduct from "./pages/admin/ManageProduct";
+import Reviews from "./Landing/reviews";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,10 +43,11 @@ function App() {
             <>
               <Landing />
               {user?.role == "user" && <Products />}
+              {user?.role == "user" && <Reviews />}
             </>
           }
         />
-        <Route
+        {/* <Route
           path="/products"
           element={
             <>
@@ -53,7 +55,7 @@ function App() {
               <Products scrollToSection />
             </>
           }
-        />
+        /> */}
         <Route path="/buynow" element={<BuyNow />} />
         <Route path="/order-hist" element={<Order />} />
         <Route path="/cart" element={<Cart />} />

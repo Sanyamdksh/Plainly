@@ -45,7 +45,14 @@ const Hero = () => {
           </h2>
         </div>
         <div className="gap-x-10 flex flex-row justify-center mt-2 text-stone-700">
-          <p className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer">
+          <p
+            className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer"
+            onClick={() =>
+              document
+                .getElementById("products-section ")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
             Product
           </p>
           <p className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer">

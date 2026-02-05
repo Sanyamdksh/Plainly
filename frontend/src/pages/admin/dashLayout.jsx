@@ -1,6 +1,6 @@
 import React from "react";
 import Dashboard from "./dashboard";
-import Products from "../../components/products";
+import Products from "../../Landing/products";
 const DashLayout = () => {
   return (
     <Dashboard>

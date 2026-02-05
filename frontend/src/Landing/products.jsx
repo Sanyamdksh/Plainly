@@ -127,7 +127,7 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
               <div className="mt-4">
                 {!isAdmin && (
                   <button
-                    className="bg-gray-400 text-white font-medium py-2 rounded-lg w-full hover:bg-red-500 transition"
+                    className="bg-gray-400 text-white font-medium py-2 rounded-lg w-full hover:bg-red-500 transition cursor-pointer"
                     onClick={() => addToCart(item._id)}
                   >
                     Add to Cart
