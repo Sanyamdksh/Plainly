@@ -134,13 +134,13 @@ const AddProduct = () => {
             </label>
             <input
               type="file"
-              className="w-full bg-stone-100 p-3 border rounded-lg flex justify-between mt-2"
+              className="w-full bg-stone-100 p-3 border rounded-lg flex justify-between mt-2 cursor-pointer"
               onChange={handleImageChange}
               accept="image/*"
               required={!isEdit}
             />
             <button
-              className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900"
+              className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900 cursor-pointer"
               type="submit"
             >
               {isEdit ? "Save changes" : "Add Product"}

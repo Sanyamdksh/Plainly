@@ -49,13 +49,20 @@ const Hero = () => {
             className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer"
             onClick={() =>
               document
-                .getElementById("products-section ")
+                .getElementById("products-section")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
           >
             Product
           </p>
-          <p className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer">
+          <p
+            className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer"
+            onClick={() =>
+              document
+                .getElementById("reviews-section")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
             Reviews
           </p>
           <p className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer">
@@ -142,7 +149,14 @@ const Hero = () => {
           </p>
 
           <div className="flex gap-4 justify-center md:justify-start">
-            <button className="bg-stone-700 hover:bg-stone-800 text-white px-6 py-3 rounded-md text-lg font-medium transition">
+            <button
+              className="bg-stone-700 hover:bg-stone-800 text-white px-6 py-3 rounded-md text-lg font-medium transition cursor-pointer"
+              onClick={() =>
+                document
+                  .getElementById("products-section")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
               Shop Now
             </button>
             {/* <button className="border border-stone-700 text-stone-700 px-6 py-3 rounded-md text-lg font-medium hover:bg-stone-700 hover:text-white transition">

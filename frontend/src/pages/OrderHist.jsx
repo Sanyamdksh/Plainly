@@ -13,7 +13,7 @@ const OrderHist = () => {
   }, []);
 
   return (
-    <div className="bg-stone-200">
+    <div className="bg-stone-200 min-h-screen">
       <div className="bg-amber-50 shadow-sm border-b border-amber-100 px-10 py-3">
         <div className="flex items-center gap-1 group">
           <img
@@ -38,7 +38,7 @@ const OrderHist = () => {
         {orders.map((order) => (
           <div
             key={order._id}
-            className="bg-stone-100 p-5 rounded-lg shadow-sm hover:shadow-md w-[75%] mt-2 border border-gray-300 ml-2 mb-2"
+            className="bg-stone-100 p-5 rounded-lg shadow-sm hover:shadow-md w-[75%] mt-2 border border-gray-300 ml-2 mb-5"
           >
             <p className="text-xl font-bold"># {order._id.slice(-6)}</p>
             <p className="text-lg font-semibold">
@@ -59,23 +59,21 @@ const OrderHist = () => {
                 >
                   <div className="flex flex-row">
                     <img
-                      src={`http://localhost:3000${item.product.image}`}
-                      alt={item.product.name}
+                      src={`http://localhost:3000${item.image}`}
+                      alt={item.name}
                       className="w-28 h-auto"
                     />
                     <div className="flex flex-col justify-center p-4">
-                      <p className="text-lg text-gray-700">
-                        {item.product.name}
-                      </p>
+                      <p className="text-lg text-gray-700">{item.name}</p>
                       <p className="text-sm text-gray-500">
                         Qty: {item.quantity}
                       </p>
                       <p className="text-lg font-semibold">
                         Rs{" "}
                         {Math.round(
-                          (item.product?.price || 0) *
-                            (1 - (item.product?.discount || 0) / 100) *
-                            item.quantity
+                          (item?.price || 0) *
+                            (1 - (item?.discount || 0) / 100) *
+                            item.quantity,
                         )}
                       </p>
                     </div>

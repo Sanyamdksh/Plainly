@@ -67,7 +67,7 @@ const Reviews = () => {
   const loop = [...testimonials, ...testimonials];
 
   return (
-    <div className="py-20 bg-amber-50 overflow-hidden">
+    <div id="reviews-section" className="py-20 bg-amber-50 overflow-hidden">
       <div className="text-center mb-10">
         <h2 className="text-4xl font-semibold text-stone-800">
           Loved by customers
@@ -78,24 +78,20 @@ const Reviews = () => {
       </div>
 
       <div className="relative w-full overflow-hidden">
-        {/* Fade edges */}
         <div className="absolute left-0 top-0 h-full w-24 bg-linear-to-r from-amber-50 to-transparent z-10" />
         <div className="absolute right-0 top-0 h-full w-24 bg-linear-to-l from-amber-50 to-transparent z-10" />
 
-        <div className="flex w-max gap-6 animate-[marquee_20s_linear_infinite] hover:[animation-play-state:paused] py-2">
+        <div className="flex w-max gap-6 animate-[marquee_22s_linear_infinite] hover:[animation-play-state:paused] py-2">
           {loop.map((review, index) => (
             <ReviewCard key={index} review={review} />
           ))}
         </div>
       </div>
-
-      {/* Row 2 Reverse */}
       <div className="relative w-full overflow-hidden mt-10">
-        {/* Fade edges */}
         <div className="absolute left-0 top-0 h-full w-24 bg-linear-to-r from-amber-50 to-transparent z-10" />
         <div className="absolute right-0 top-0 h-full w-24 bg-linear-to-l from-amber-50 to-transparent z-10" />
 
-        <div className="flex w-max gap-6 animate-[marqueeReverse_16s_linear_infinite] hover:[animation-play-state:paused] py-2">
+        <div className="flex w-max gap-6 animate-[marqueeReverse_20s_linear_infinite] hover:[animation-play-state:paused] py-2">
           {loop.map((review, index) => (
             <ReviewCard key={index} review={review} />
           ))}
@@ -119,7 +115,6 @@ const Reviews = () => {
   );
 };
 
-/* Review Card */
 const ReviewCard = ({ review }) => {
   return (
     <div className="w-[320px] bg-white rounded-2xl shadow-md p-6 hover:scale-105 transition duration-300">

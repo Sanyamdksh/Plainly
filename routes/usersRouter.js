@@ -39,9 +39,21 @@ router.post("/place-order", isLoggedin, async (req, res) => {
       return sum + priceAfterDiscount * item.quantity;
     }, 0);
 
+    const OrderItems = user.cart.map((item) => ({
+      product: item.product._id,
+      name: item.product.name,
+      image: item.product.image,
+      price: item.product.price,
+      discount: item.product.discount,
+      bgcolor: item.product.bgcolor,
+      quantity: item.quantity,
+    }));
+
+    console.log(OrderItems);
+
     const order = await orderModel.create({
       user: user._id,
-      items: user.cart,
+      items: OrderItems,
       amount,
       address,
     });
@@ -56,9 +68,7 @@ router.post("/place-order", isLoggedin, async (req, res) => {
 
 router.get("/orders", isLoggedin, async (req, res) => {
   try {
-    const orders = await orderModel
-      .find({ user: req.user._id })
-      .populate("items.product");
+    const orders = await orderModel.find({ user: req.user._id });
     res.json({ success: true, orders });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server Error" });
@@ -72,7 +82,7 @@ router.post("/cart/add", isLoggedin, async (req, res) => {
   //mongoose stores product as objID
   // productId from frontend is a string
   const exist_item = user.cart.find(
-    (item) => item.product.toString() === productId
+    (item) => item.product.toString() === productId,
   );
   if (exist_item) exist_item.quantity += 1;
   else user.cart.push({ product: productId });
@@ -104,7 +114,7 @@ router.post("/cart/remove", isLoggedin, async (req, res) => {
   const { productId } = req.body;
   let user = await userModel.findById(req.user._id).populate("cart.product");
   user.cart = user.cart.filter(
-    (item) => item.product._id.toString() !== productId
+    (item) => item.product._id.toString() !== productId,
   );
 
   await user.save();
