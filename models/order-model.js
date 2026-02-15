@@ -9,6 +9,8 @@ const orderSchema = mongoose.Schema({
   items: [
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+
+      // Doing it this way so that it also works for order-history
       image: String,
       name: String,
       price: Number,

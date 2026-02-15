@@ -16,6 +16,7 @@ import AccessDenied from "./pages/admin/AccessDenied";
 import AdminRoute from "./utils/AdminRoute";
 import ManageProduct from "./pages/admin/ManageProduct";
 import Reviews from "./Landing/reviews";
+import Footer from "./Landing/Footer";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -44,6 +45,7 @@ function App() {
               <Landing />
               {user?.role == "user" && <Products />}
               {user?.role == "user" && <Reviews />}
+              <Footer />
             </>
           }
         />

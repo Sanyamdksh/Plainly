@@ -13,7 +13,7 @@ const OrderHist = () => {
   }, []);
 
   return (
-    <div className="bg-stone-200 min-h-screen">
+    <div className="bg-stone-200 min-h-screen pb-2">
       <div className="bg-amber-50 shadow-sm border-b border-amber-100 px-10 py-3">
         <div className="flex items-center gap-1 group">
           <img

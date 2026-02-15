@@ -31,7 +31,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-amber-50">
+    <div id="home" className="min-h-screen w-full bg-amber-50">
       {/* NAVBAR */}
       <div className="flex flex-row items-center px-12 pt-5 justify-between py-10">
         <div
@@ -53,7 +53,7 @@ const Hero = () => {
                 ?.scrollIntoView({ behavior: "smooth" })
             }
           >
-            Product
+            Products
           </p>
           <p
             className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer"
@@ -64,9 +64,6 @@ const Hero = () => {
             }
           >
             Reviews
-          </p>
-          <p className="text-lg font-normal hover:text-stone-900 hover:scale-110 transition-transform duration-200 cursor-pointer">
-            About Us
           </p>
         </div>
         <div className="flex gap-x-6 text-xl">
