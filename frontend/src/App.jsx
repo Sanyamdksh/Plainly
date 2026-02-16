@@ -17,6 +17,8 @@ import AdminRoute from "./utils/AdminRoute";
 import ManageProduct from "./pages/admin/ManageProduct";
 import Reviews from "./Landing/reviews";
 import Footer from "./Landing/Footer";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 function App() {
   const [user, setUser] = useState(null);

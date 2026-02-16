@@ -1,6 +1,7 @@
 const express = require("express");
 const flash = require("connect-flash");
 const app = express();
+app.set("trust proxy", 1);
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
@@ -14,8 +15,6 @@ require("dotenv").config();
 const connectDB = require("./config/mongoose-connection");
 
 connectDB();
-
-app.set("trust proxy", 1);
 
 app.use(
   cors({
