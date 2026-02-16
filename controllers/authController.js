@@ -21,8 +21,10 @@ module.exports.registerUser = async (req, res) => {
     const token = generateToken(user);
     res.cookie("token", token, {
       httpOnly: true, //if any hacker injects JS in code he wont be able to steal cookie
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.json({ success: true, message: "User registered successfully" });
   } catch (err) {
@@ -52,6 +54,8 @@ module.exports.loginUser = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.json({ success: true, message: "Login successful" });
   } catch (err) {

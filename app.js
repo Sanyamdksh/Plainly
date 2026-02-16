@@ -15,6 +15,8 @@ const connectDB = require("./config/mongoose-connection");
 
 connectDB();
 
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: "https://plainly-eight.vercel.app",
