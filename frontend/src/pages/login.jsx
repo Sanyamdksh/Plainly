@@ -24,7 +24,7 @@ const Login = ({ onSwitch }) => {
       if (res.data.success) {
         toast.success("Login Successfull");
         setTimeout(() => {
-          window.location.href = "/home";
+          navigate("/home");
         }, 1000);
       } else {
         toast.error(res.data.message);
