@@ -50,8 +50,8 @@ module.exports.loginUser = async (req, res) => {
     const token = generateToken(user);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: true,
+      sameSite: "none",
     });
     res.json({ success: true, message: "Login successful" });
   } catch (err) {

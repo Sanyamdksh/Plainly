@@ -88,7 +88,7 @@ const Hero = () => {
                 onMouseLeave={() => setOpen(false)}
               >
                 <h3 className="text-lg font-semibold text-stone-700">
-                  Hello, {user.fullname}
+                  Hello, {user?.fullname || "Guest"}
                 </h3>
                 <p className="text-sm text-stone-500 mb-4">{user.email}</p>
                 <ul className="space-y-3 text-stone-700 font-medium">
