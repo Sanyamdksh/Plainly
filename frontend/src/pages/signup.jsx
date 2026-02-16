@@ -18,7 +18,7 @@ const Signup = ({ onSwitch }) => {
       const res = await axios.post(
         "http://localhost:3000/users/register",
         { fullname, email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       alert(res.data);
       navigate("/home");
@@ -52,6 +52,7 @@ const Signup = ({ onSwitch }) => {
             className="p-3 rounded-md border border-stone-300 outline-none"
             value={fullname}
             onChange={(e) => setFullname(e.target.value)}
+            required
           />
           <input
             type="email"
@@ -59,6 +60,7 @@ const Signup = ({ onSwitch }) => {
             className="p-3 rounded-md border border-stone-300 outline-none"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
             type="password"
@@ -66,6 +68,7 @@ const Signup = ({ onSwitch }) => {
             className="p-3 rounded-md border border-stone-300 outline-none"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <button
             type="submit"

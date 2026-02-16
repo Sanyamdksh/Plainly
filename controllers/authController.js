@@ -25,7 +25,7 @@ module.exports.registerUser = async (req, res) => {
       });
     });
   } catch (err) {
-    res.send(err.message);
+    res.status(401).json({ success: false, message: "There was an error" });
   }
 };
 

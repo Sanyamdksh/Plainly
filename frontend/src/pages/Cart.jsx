@@ -6,6 +6,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Empty_cart from "../assets/empty_cart.gif";
 import Logo from "../assets/logo.png";
+import Footer from "../Landing/Footer";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -63,115 +64,119 @@ const Cart = () => {
 
   console.log(cart);
   return (
-    <div className="min-h-screen bg-slate-100 ">
-      <div className="bg-amber-50 shadow-sm border-b border-amber-100 px-10 py-3">
-        <div className="flex items-center gap-1 group">
-          <img
-            src={Logo}
-            alt="Plainly logo"
-            className="h-10 w-auto cursor-pointer"
-            onClick={() => navigate("/home")}
-          />
+    <>
+      <div className="min-h-screen bg-slate-100 ">
+        <div className="bg-amber-50 shadow-sm border-b border-amber-100 px-10 py-3">
+          <div className="flex items-center gap-1 group">
+            <img
+              src={Logo}
+              alt="Plainly logo"
+              className="h-10 w-auto cursor-pointer"
+              onClick={() => navigate("/home")}
+            />
 
-          <h2
-            className="font-bold text-3xl text-stone-700 group-hover:text-stone-900 transition cursor-pointer"
-            onClick={() => navigate("/home")}
-          >
-            Plainly
-          </h2>
-        </div>
-      </div>
-      <div className="px-10">
-        <h2 className="text-3xl font-semibold mt-2 p-1">Cart Items</h2>
-        {cart.length > 0 && (
-          <div className="flex flex-col gap-y-5 p-4">
-            {cart.map((item) => (
-              <div
-                key={item._id}
-                className="w-3/4 border border-gray-300 bg-slate-200 shadow-sm hover:shadow-md p-4"
-              >
-                <div className="flex flex-row items-center">
-                  <img
-                    src={`http://localhost:3000${item.product.image}`}
-                    alt={item.product.name}
-                    className="w-32 h-auto"
-                  />
-                  <div className="flex flex-row items-center justify-between w-full">
-                    <div className="flex flex-col p-5">
-                      <p className="text-lg font-semibold text-gray-700">
-                        {item.product.name}
-                      </p>
-                      <p className="text-sm font-semibold text-black line-through">
-                        Rs. {item.product.price}
-                      </p>
-                      <p className="text-xl font-semibold">
-                        Rs{" "}
-                        {(item.product.price -
-                          (item.product.price * item.product.discount) / 100) *
-                          item.quantity}
-                      </p>
-                      <div className="flex flex-row gap-x-5 mt-2">
-                        <button
-                          disabled={
-                            item.quantity === 1 ||
-                            loadingItem === item.product._id
-                          }
-                          className={`px-3 py-1 rounded font-bold flex items-center ${
-                            item.quantity === 1
-                              ? "bg-gray-300 cursor-not-allowed"
-                              : "bg-gray-200 hover:bg-gray-300 cursor-pointer"
-                          }`}
-                          onClick={() =>
-                            decQty(item.product._id, item.quantity)
-                          }
-                        >
-                          <FaMinus />
-                        </button>
-                        <span>{item.quantity}</span>
-                        <button
-                          className="px-3 py-1 bg-gray-200 rounded font-bold cursor-pointer"
-                          onClick={() =>
-                            incQty(item.product._id, item.quantity)
-                          }
-                        >
-                          <FaPlus />
-                        </button>
-                      </div>
-                    </div>
-                    <button
-                      className="text-red-600 mr-4 hover:text-red-800 cursor-pointer"
-                      onClick={() => handleRemove(item.product._id)}
-                    >
-                      <MdDeleteForever size={24} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <button
-              className="ml-5 mt-2 p-4 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-600 w-[9%]"
-              onClick={() => navigate("/buynow", { state: { cart } })}
-            >
-              Place Order
-            </button>
-          </div>
-        )}
-        {cart.length === 0 && (
-          <div className="flex flex-col items-center p-5">
-            <img src={Empty_cart} alt="empty_cart" className="h-110 w-auto" />
-            <p className="mt-6 text-2xl text-gray-600">
-              Your cart is <span className="text-red-400">empty!</span>
-            </p>
-            <button
-              className="bg-red-500 p-3 mt-2 text-white rounded-md border border-gray-300 cursor-pointer"
+            <h2
+              className="font-bold text-3xl text-stone-700 group-hover:text-stone-900 transition cursor-pointer"
               onClick={() => navigate("/home")}
             >
-              Shop Items
-            </button>
+              Plainly
+            </h2>
           </div>
-        )}
+        </div>
+        <div className="px-10">
+          <h2 className="text-3xl font-semibold mt-2 p-1">Cart Items</h2>
+          {cart.length > 0 && (
+            <div className="flex flex-col gap-y-5 p-4">
+              {cart.map((item) => (
+                <div
+                  key={item._id}
+                  className="w-3/4 border border-gray-300 bg-slate-200 shadow-sm hover:shadow-md p-4"
+                >
+                  <div className="flex flex-row items-center">
+                    <img
+                      src={`http://localhost:3000${item.product.image}`}
+                      alt={item.product.name}
+                      className="w-32 h-auto"
+                    />
+                    <div className="flex flex-row items-center justify-between w-full">
+                      <div className="flex flex-col p-5">
+                        <p className="text-lg font-semibold text-gray-700">
+                          {item.product.name}
+                        </p>
+                        <p className="text-sm font-semibold text-black line-through">
+                          Rs. {item.product.price}
+                        </p>
+                        <p className="text-xl font-semibold">
+                          Rs{" "}
+                          {(item.product.price -
+                            (item.product.price * item.product.discount) /
+                              100) *
+                            item.quantity}
+                        </p>
+                        <div className="flex flex-row gap-x-5 mt-2">
+                          <button
+                            disabled={
+                              item.quantity === 1 ||
+                              loadingItem === item.product._id
+                            }
+                            className={`px-3 py-1 rounded font-bold flex items-center ${
+                              item.quantity === 1
+                                ? "bg-gray-300 cursor-not-allowed"
+                                : "bg-gray-200 hover:bg-gray-300 cursor-pointer"
+                            }`}
+                            onClick={() =>
+                              decQty(item.product._id, item.quantity)
+                            }
+                          >
+                            <FaMinus />
+                          </button>
+                          <span>{item.quantity}</span>
+                          <button
+                            className="px-3 py-1 bg-gray-200 rounded font-bold cursor-pointer"
+                            onClick={() =>
+                              incQty(item.product._id, item.quantity)
+                            }
+                          >
+                            <FaPlus />
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        className="text-red-600 mr-4 hover:text-red-800 cursor-pointer"
+                        onClick={() => handleRemove(item.product._id)}
+                      >
+                        <MdDeleteForever size={24} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <button
+                className="ml-5 mt-2 p-4 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-600 w-[9%]"
+                onClick={() => navigate("/buynow", { state: { cart } })}
+              >
+                Place Order
+              </button>
+            </div>
+          )}
+          {cart.length === 0 && (
+            <div className="flex flex-col items-center p-5">
+              <img src={Empty_cart} alt="empty_cart" className="h-110 w-auto" />
+              <p className="mt-6 text-2xl text-gray-600">
+                Your cart is <span className="text-red-400">empty!</span>
+              </p>
+              <button
+                className="bg-red-500 p-3 mt-2 text-white rounded-md border border-gray-300 cursor-pointer"
+                onClick={() => navigate("/home")}
+              >
+                Shop Items
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ const dbgr = require("debug")("development:mongoose");
 const config = require("config");
 
 mongoose
-  .connect(`${config.get("MONGODB_URI")}/plainly`)
+  .connect(`${config.get("MONGODB_URL")}/plainly`)
   .then(function () {
     dbgr("connected");
   })
