@@ -17,7 +17,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "https://plainly-eight.vercel.app/",
+    origin: "https://plainly-eight.vercel.app",
     credentials: true,
   }),
 );
@@ -32,4 +32,5 @@ app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/uploads", express.static("uploads"));
 
-app.listen(3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT);
