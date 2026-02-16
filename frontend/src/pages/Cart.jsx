@@ -14,7 +14,7 @@ const Cart = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/cart", {
+    fetch("https://plainly-backend.onrender.com/users/cart", {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -24,12 +24,15 @@ const Cart = () => {
 
   const incQty = async (productId, quantity) => {
     setLoadingItem(productId);
-    const res = await fetch("http://localhost:3000/users/cart/update", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId, quantity: quantity + 1 }),
-    });
+    const res = await fetch(
+      "https://plainly-backend.onrender.com/users/cart/update",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, quantity: quantity + 1 }),
+      },
+    );
     const data = await res.json();
     setCart(data.cart);
     setLoadingItem(null);
@@ -38,12 +41,15 @@ const Cart = () => {
   const decQty = async (productId, quantity) => {
     if (quantity <= 1) return;
     setLoadingItem(productId);
-    const res = await fetch("http://localhost:3000/users/cart/update", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId, quantity: quantity - 1 }),
-    });
+    const res = await fetch(
+      "https://plainly-backend.onrender.com/users/cart/update",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, quantity: quantity - 1 }),
+      },
+    );
     const data = await res.json();
     if (data.success) setCart(data.cart);
     setLoadingItem(null);
@@ -51,12 +57,15 @@ const Cart = () => {
 
   const handleRemove = async (productId) => {
     setLoadingItem(productId);
-    const res = await fetch("http://localhost:3000/users/cart/remove", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId }),
-    });
+    const res = await fetch(
+      "https://plainly-backend.onrender.com/users/cart/remove",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId }),
+      },
+    );
     const data = await res.json();
     if (data.success) setCart(data.cart);
     setLoadingItem(null);

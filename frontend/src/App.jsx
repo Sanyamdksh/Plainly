@@ -23,7 +23,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/profile", {
+    fetch("https://plainly-backend.onrender.com/users/profile", {
       credentials: "include",
     })
       .then((res) => res.json())

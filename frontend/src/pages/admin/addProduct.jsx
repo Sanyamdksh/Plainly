@@ -19,7 +19,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     if (!isEdit) return;
-    fetch(`http://localhost:3000/products/${productId}`, {
+    fetch(`https://plainly-backend.onrender.com/products/${productId}`, {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -57,8 +57,8 @@ const AddProduct = () => {
     try {
       let res = await fetch(
         isEdit
-          ? `http://localhost:3000/products/${productId}`
-          : "http://localhost:3000/products/create",
+          ? `https://plainly-backend.onrender.com/products/${productId}`
+          : "https://plainly-backend.onrender.com/products/create",
         {
           method: isEdit ? "PUT" : "POST",
           body: formData,

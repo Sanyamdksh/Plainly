@@ -16,7 +16,7 @@ const Signup = ({ onSwitch }) => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/register",
+        "https://plainly-backend.onrender.com/users/register",
         { fullname, email, password },
         { withCredentials: true },
       );

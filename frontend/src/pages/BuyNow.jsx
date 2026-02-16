@@ -18,9 +18,12 @@ const BuyNow = () => {
 
   useEffect(() => {
     const fetchCart = async () => {
-      const res = await fetch("http://localhost:3000/users/cart", {
-        credentials: "include",
-      });
+      const res = await fetch(
+        "https://plainly-backend.onrender.com/users/cart",
+        {
+          credentials: "include",
+        },
+      );
       const data = await res.json();
       if (!data.cart || data.cart.length === 0) {
         navigate("/home");
@@ -33,7 +36,7 @@ const BuyNow = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/profile", {
+    fetch("https://plainly-backend.onrender.com/users/profile", {
       method: "GET",
       credentials: "include",
     })
@@ -64,7 +67,7 @@ const BuyNow = () => {
   const handleAddress = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/save-add",
+        "https://plainly-backend.onrender.com/users/save-add",
         formData,
         {
           withCredentials: true,
@@ -88,16 +91,19 @@ const BuyNow = () => {
       return;
     }
 
-    const res = await fetch("http://localhost:3000/users/place-order", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      "https://plainly-backend.onrender.com/users/place-order",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address: user.address,
+        }),
       },
-      body: JSON.stringify({
-        address: user.address,
-      }),
-    });
+    );
 
     const data = await res.json();
     if (data.success) {

@@ -17,7 +17,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://plainly-eight.vercel.app/",
     credentials: true,
   }),
 );

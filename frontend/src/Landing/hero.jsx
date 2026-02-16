@@ -13,7 +13,7 @@ const Hero = () => {
   const [user, setUser] = useState([]);
 
   const handleLogout = async () => {
-    await fetch("http://localhost:3000/logout", {
+    await fetch("https://plainly-backend.onrender.com/logout", {
       method: "GET",
       credentials: "include",
     });
@@ -21,7 +21,7 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/profile", {
+    fetch("https://plainly-backend.onrender.com/users/profile", {
       method: "GET",
       credentials: "include",
     })

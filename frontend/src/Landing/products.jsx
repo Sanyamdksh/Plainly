@@ -10,7 +10,7 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
 
   // Fetch products
   useEffect(() => {
-    fetch("http://localhost:3000/products/all", {
+    fetch("https://plainly-backend.onrender.com/products/all", {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -27,7 +27,7 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
   }, [scrollToSection, isAdmin]);
 
   const addToCart = async (productId) => {
-    await fetch("http://localhost:3000/users/cart/add", {
+    await fetch("https://plainly-backend.onrender.com/users/cart/add", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -40,10 +40,13 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
     const confirmDelete = window.confirm("Do you want to delete this product?");
     if (!confirmDelete) return;
     try {
-      const res = await fetch(`http://localhost:3000/products/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `https://plainly-backend.onrender.com/products/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
       if (!res.ok) throw new Error();
       toast.success("Product deleted successfully");
 

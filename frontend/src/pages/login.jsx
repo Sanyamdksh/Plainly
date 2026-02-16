@@ -17,9 +17,9 @@ const Login = ({ onSwitch }) => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/login",
+        "https://plainly-backend.onrender.com/users/login",
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (res.data.success) {
         toast.success("Login Successfull");

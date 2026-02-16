@@ -7,7 +7,9 @@ const OrderHist = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/orders", { credentials: "include" })
+    fetch("https://plainly-backend.onrender.com/users/orders", {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => setOrders(data.orders));
   }, []);
