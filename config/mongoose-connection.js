@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
-const dbgr = require("debug")("development:mongoose");
-const config = require("config");
 
-mongoose
-  .connect(`${config.get("MONGODB_URI")}/plainly`)
-  .then(function () {
-    dbgr("connected");
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected");
+  } catch (err) {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;

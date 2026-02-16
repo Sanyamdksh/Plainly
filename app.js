@@ -1,5 +1,4 @@
 const express = require("express");
-const db = require("./config/mongoose-connection");
 const flash = require("connect-flash");
 const app = express();
 const cookieParser = require("cookie-parser");
@@ -12,6 +11,9 @@ const indexRouter = require("./routes/index");
 const cors = require("cors");
 
 require("dotenv").config();
+const connectDB = require("./config/mongoose-connection");
+
+connectDB();
 
 app.use(
   cors({
