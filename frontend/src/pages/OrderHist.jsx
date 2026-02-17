@@ -62,7 +62,7 @@ const OrderHist = () => {
                   >
                     <div className="flex flex-row">
                       <img
-                        src={`http://localhost:3000${item.image}`}
+                        src={`https://plainly-backend.onrender.com${item.image}`}
                         alt={item.name}
                         className="w-28 h-auto"
                       />

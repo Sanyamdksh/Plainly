@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import desk from "../assets/desk.webp";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signup = ({ onSwitch }) => {
   const navigate = useNavigate();
@@ -20,10 +21,16 @@ const Signup = ({ onSwitch }) => {
         { fullname, email, password },
         { withCredentials: true },
       );
-      alert(res.data.message);
-      navigate("/home");
+      if (res.data.success) {
+        toast.success("Login Successfull");
+        setTimeout(() => {
+          navigate("/home");
+        }, 1000);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }

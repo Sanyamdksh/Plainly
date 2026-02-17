@@ -103,7 +103,7 @@ const Cart = () => {
                 >
                   <div className="flex flex-row items-center">
                     <img
-                      src={`http://localhost:3000${item.product.image}`}
+                      src={`https://plainly-backend.onrender.com${item.product.image}`}
                       alt={item.product.name}
                       className="w-32 h-auto"
                     />

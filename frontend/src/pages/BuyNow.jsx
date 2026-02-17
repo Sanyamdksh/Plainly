@@ -322,7 +322,7 @@ const BuyNow = () => {
                     </p>
                   </div>
                   <img
-                    src={`http://localhost:3000${item.product.image}`}
+                    src={`https://plainly-backend.onrender.com${item.product.image}`}
                     alt={item.product.name}
                     className="w-24 h-24 mr-10"
                   />

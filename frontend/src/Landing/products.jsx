@@ -100,7 +100,7 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
                 style={!isAdmin ? { backgroundColor: item.bgcolor } : {}}
               >
                 <img
-                  src={`http://localhost:3000${item.image}`}
+                  src={`https://plainly-backend.onrender.com${item.image}`}
                   alt={item.name}
                   className={`object-cover ${
                     isAdmin ? "h-38 w-38" : "h-60 w-60 shadow-md"
