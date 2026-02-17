@@ -81,8 +81,8 @@ const AddProduct = () => {
             name: "",
             price: "",
             discount: "",
-            bgcolor: "#ffffff",
             image: null,
+            bgcolor: "#ffffff",
           });
         }
       } else {
@@ -157,7 +157,7 @@ const AddProduct = () => {
             />
             <button
               disabled={submitting}
-              className={`w-ful text-white py-3 rounded-lg ${submitting ? "bg-stone-400 cursor-not-allowed" : " bg-stone-800 hover:bg-stone-900 cursor-pointer"}`}
+              className={`w-full text-white py-3 rounded-lg ${submitting ? "bg-stone-400 cursor-not-allowed" : " bg-stone-800 hover:bg-stone-900 cursor-pointer"}`}
               type="submit"
             >
               {submitting

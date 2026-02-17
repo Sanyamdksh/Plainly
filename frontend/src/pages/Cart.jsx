@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Empty_cart from "../assets/empty_cart.gif";
 import Logo from "../assets/logo.png";
 import Footer from "../Landing/Footer";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -55,23 +56,35 @@ const Cart = () => {
     setLoadingItem(null);
   };
 
+  const [deleteId, setDeleteId] = useState(null);
+
   const handleRemove = async (productId) => {
-    setLoadingItem(productId);
-    const res = await fetch(
-      "https://plainly-backend.onrender.com/users/cart/remove",
-      {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId }),
-      },
-    );
-    const data = await res.json();
-    if (data.success) setCart(data.cart);
-    setLoadingItem(null);
+    if (deleteId === productId) return;
+    setDeleteId(productId);
+    try {
+      const res = await fetch(
+        "https://plainly-backend.onrender.com/users/cart/remove",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId }),
+        },
+      );
+      const data = await res.json();
+      if (data.success) {
+        setCart(data.cart);
+        toast.success("Item removed!");
+      } else {
+        toast.error("Failed to remove item");
+      }
+    } catch (err) {
+      toast.error("Something went wrong");
+    } finally {
+      setDeleteId(null);
+    }
   };
 
-  console.log(cart);
   return (
     <>
       <div className="min-h-screen bg-slate-100 ">
@@ -151,10 +164,19 @@ const Cart = () => {
                         </div>
                       </div>
                       <button
-                        className="text-red-600 mr-4 hover:text-red-800 cursor-pointer"
+                        disabled={deleteId === item.product._id}
+                        className={`mr-4 ${
+                          deleteId === item.product._id
+                            ? "text-red-300 cursor-not-allowed"
+                            : "text-red-600 hover:text-red-800 cursor-pointer"
+                        }`}
                         onClick={() => handleRemove(item.product._id)}
                       >
-                        <MdDeleteForever size={24} />
+                        {deleteId === item.product._id ? (
+                          "..."
+                        ) : (
+                          <MdDeleteForever size={24} />
+                        )}
                       </button>
                     </div>
                   </div>
