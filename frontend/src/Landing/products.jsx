@@ -8,6 +8,9 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
 
   const isAdmin = variant === "admin";
 
+  const [cartLoadingId, setCartLoadingId] = useState(null);
+  const [deleteLoadingId, setDeleteLoadingId] = useState(null);
+
   // Fetch products
   useEffect(() => {
     fetch("https://plainly-backend.onrender.com/products/all", {
@@ -27,16 +30,30 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
   }, [scrollToSection, isAdmin]);
 
   const addToCart = async (productId) => {
-    await fetch("https://plainly-backend.onrender.com/users/cart/add", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId }),
-    });
-    toast.success("Added to cart!");
+    if (cartLoadingId === productId) return;
+    setCartLoadingId(productId);
+    try {
+      const res = await fetch(
+        "https://plainly-backend.onrender.com/users/cart/add",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId }),
+        },
+      );
+      if (!res.ok) throw new Error();
+      toast.success("Added to cart!");
+    } catch (err) {
+      toast.error("Failed to add to cart");
+    } finally {
+      setCartLoadingId(null);
+    }
   };
 
   const handleDelete = async (id) => {
+    if (deleteLoadingId === id) return;
+    setDeleteLoadingId(id);
     const confirmDelete = window.confirm("Do you want to delete this product?");
     if (!confirmDelete) return;
     try {
@@ -53,6 +70,8 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
       setProducts((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
       toast.error("Failed to delete the product");
+    } finally {
+      setDeleteLoadingId(null);
     }
   };
 
@@ -130,10 +149,11 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
               <div className="mt-4">
                 {!isAdmin && (
                   <button
-                    className="bg-gray-400 text-white font-medium py-2 rounded-lg w-full hover:bg-red-500 transition cursor-pointer`"
+                    disabled={cartLoadingId === item._id}
+                    className={`text-white font-medium py-2 transition rounded-lg w-full ${cartLoadingId === item._id ? "bg-gray-300 cursor-not-allowed" : "bg-gray-400  hover:bg-red-500 cursor-pointer"} `}
                     onClick={() => addToCart(item._id)}
                   >
-                    Add to Cart
+                    {cartLoadingId === item._id ? "Adding..." : "Add to Cart"}
                   </button>
                 )}
 
@@ -148,10 +168,15 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
                       Edit
                     </button>
                     <button
-                      className="text-red-600 hover:underline cursor-pointer"
+                      disabled={deleteLoadingId === item._id}
+                      className={`hover:underline ${
+                        deleteLoadingId === item._id
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "text-red-600 cursor-pointer"
+                      }`}
                       onClick={() => handleDelete(item._id)}
                     >
-                      Delete
+                      {deleteLoadingId === item._id ? "Deleting..." : "Delete"}
                     </button>
                   </div>
                 )}

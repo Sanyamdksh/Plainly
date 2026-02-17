@@ -43,9 +43,14 @@ const AddProduct = () => {
     setProduct({ ...product, image: e.target.files[0] });
   };
 
+  const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // FormData creates a virtual form that holds all the data to be sent to the backend
+    if (submitting) return;
+    setSubmitting(true);
+
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("price", product.price);
@@ -71,12 +76,23 @@ const AddProduct = () => {
             ? "Product updated successfully"
             : "Product created successfully",
         );
+        if (!isEdit) {
+          setProduct({
+            name: "",
+            price: "",
+            discount: "",
+            bgcolor: "#ffffff",
+            image: null,
+          });
+        }
       } else {
         toast.error("Failed to create product");
       }
     } catch (err) {
       toast.error("something went wrong");
       console.log(err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -140,10 +156,17 @@ const AddProduct = () => {
               required={!isEdit}
             />
             <button
-              className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900 cursor-pointer"
+              disabled={submitting}
+              className={`w-ful text-white py-3 rounded-lg ${submitting ? "bg-stone-400 cursor-not-allowed" : " bg-stone-800 hover:bg-stone-900 cursor-pointer"}`}
               type="submit"
             >
-              {isEdit ? "Save changes" : "Add Product"}
+              {submitting
+                ? isEdit
+                  ? "Saving..."
+                  : "Adding..."
+                : isEdit
+                  ? "Save changes"
+                  : "Add Product"}
             </button>
           </div>
         </div>
