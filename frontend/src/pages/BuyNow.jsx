@@ -306,7 +306,7 @@ const BuyNow = () => {
                     </div>
                     <button
                       type="button"
-                      className="bg-stone-700 text-white px-4 py-2 w-[40%] rounded-lg hover:bg-stone-800"
+                      className="bg-stone-700 text-white px-4 py-2 w-[40%] rounded-lg hover:bg-stone-800 cursor-pointer"
                       onClick={handleAddress}
                     >
                       Save Address

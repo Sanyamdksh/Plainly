@@ -38,6 +38,19 @@ const OrderHist = () => {
           <h2 className="text-3xl font-semibold text-stone-800  p-2">
             My Orders
           </h2>
+          orders.length === 0 ? (
+          <div className="flex flex-col items-center justify-center mt-20">
+            <p className="text-2xl text-stone-600 mb-4">
+              You haven’t placed any orders yet.
+            </p>
+            <button
+              onClick={() => navigate("/")}
+              className="bg-stone-700 text-white px-6 py-3 rounded-md hover:bg-stone-800 transition"
+            >
+              Start Shopping
+            </button>
+          </div>
+          ) :(
           {orders.map((order) => (
             <div
               key={order._id}
@@ -93,6 +106,7 @@ const OrderHist = () => {
               </div>
             </div>
           ))}
+          )
         </div>
       </div>
       <Footer />
