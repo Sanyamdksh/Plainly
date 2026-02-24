@@ -7,7 +7,7 @@ const userModel = require("../models/user-model");
 const orderModel = require("../models/order-model");
 
 router.get("/profile", isLoggedin, (req, res) => {
-  return res.json({ user: req.user });
+  return res.json({ success: true, user: req.user });
 });
 
 router.post("/register", registerUser);

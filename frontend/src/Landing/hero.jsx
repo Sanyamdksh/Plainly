@@ -27,16 +27,6 @@ const Hero = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetch("https://plainly-backend.onrender.com/users/profile", {
-  //     method: "GET",
-  //     credentials: "include",
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => setUser(data.user))
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   return (
     <div id="home" className="min-h-screen w-full bg-amber-50">
       {/* NAVBAR */}
