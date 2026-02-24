@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 const Hero = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const { user, setUser } = useAuth();
+  const { user, setUser, loading } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -23,7 +23,7 @@ const Hero = () => {
       setUser(null);
       navigate("/");
     } catch {
-      toast.console.error("Logout failed");
+      toast.error("Logout failed");
     }
   };
 
@@ -94,7 +94,7 @@ const Hero = () => {
               onMouseEnter={() => setOpen(true)}
               onMouseLeave={() => setOpen(false)}
             />
-            {open && (
+            {open && !loading && (
               <div
                 className="absolute bg-white shadow-xl rounded-lg p-5 z-50 right-2 w-56"
                 onMouseEnter={() => setOpen(true)}

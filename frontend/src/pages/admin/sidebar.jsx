@@ -1,8 +1,24 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { LayoutDashboard, PlusCircle, Package } from "lucide-react";
+import { toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const { user, setUser } = useAuth();
+  const handleLogout = async () => {
+    try {
+      await fetch("https://plainly-backend.onrender.com/logout", {
+        method: "GET",
+        credentials: "include",
+      });
+      setUser(null);
+      navigate("/");
+    } catch {
+      toast.error("Logout failed");
+    }
+  };
   const base =
     "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-stone-600 mb-2";
 
@@ -48,9 +64,12 @@ const Sidebar = () => {
         Manage Products
       </NavLink>
 
-      <NavLink to="/" className="mt-auto text-red-400 hover:text-red-500 pt-10">
+      <button
+        className="mt-auto text-red-400 hover:text-red-500 pt-10"
+        onClick={handleLogout}
+      >
         Logout
-      </NavLink>
+      </button>
     </div>
   );
 };
