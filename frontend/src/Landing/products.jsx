@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 const Products = ({ scrollToSection = false, variant = "store" }) => {
+  const { user } = useAuth();
+
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
@@ -147,7 +150,7 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
 
               {/* Actions */}
               <div className="mt-4">
-                {!isAdmin && (
+                {user?.role === "user" && (
                   <button
                     disabled={cartLoadingId === item._id}
                     className={`text-white font-medium py-2 transition rounded-lg w-full ${cartLoadingId === item._id ? "bg-gray-300 cursor-not-allowed" : "bg-gray-400  hover:bg-red-500 cursor-pointer"} `}
