@@ -20,7 +20,7 @@ import Footer from "./Landing/Footer";
 import axios from "axios";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
-
+import Loader from "./Loader/Loader";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
           path="/"
           element={
             loading ? (
-              <p className="text-center mt-20 text-xl">Loading...</p>
+              <Loader />
             ) : (
               <>
                 <Landing />
