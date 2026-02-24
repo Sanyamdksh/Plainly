@@ -4,6 +4,7 @@ import desk from "../assets/desk.webp";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 const Login = ({ onSwitch }) => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const Login = ({ onSwitch }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { setUser } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,8 +26,9 @@ const Login = ({ onSwitch }) => {
       );
       if (res.data.success) {
         toast.success("Login Successfull");
+        setUser(res.data.user);
         setTimeout(() => {
-          navigate("/home");
+          navigate("/");
         }, 1000);
       } else {
         toast.error(res.data.message);

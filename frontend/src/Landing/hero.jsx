@@ -6,36 +6,43 @@ import main from "../assets/main.webp";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Logo from "../assets/logo.png";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Hero = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState([]);
+  const { user, setUser } = useAuth();
 
   const handleLogout = async () => {
-    await fetch("https://plainly-backend.onrender.com/logout", {
-      method: "GET",
-      credentials: "include",
-    });
-    navigate("/");
+    try {
+      await fetch("https://plainly-backend.onrender.com/logout", {
+        method: "GET",
+        credentials: "include",
+      });
+      setUser(null);
+      navigate("/");
+    } catch {
+      toast.console.error("Logout failed");
+    }
   };
 
-  useEffect(() => {
-    fetch("https://plainly-backend.onrender.com/users/profile", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => setUser(data.user))
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://plainly-backend.onrender.com/users/profile", {
+  //     method: "GET",
+  //     credentials: "include",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => setUser(data.user))
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <div id="home" className="min-h-screen w-full bg-amber-50">
       {/* NAVBAR */}
       <div className="flex flex-row items-center px-12 pt-5 justify-between py-10">
         <div
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/")}
           className="flex items-center gap-1 cursor-pointer group"
         >
           <img src={Logo} alt="Plainly logo" className="h-10 w-auto" />
@@ -67,14 +74,18 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex gap-x-6 text-xl">
-          <TbLogout2
-            className="cursor-pointer hover:text-red-700 hover:scale-125 transition-transform duration-200 text-red-600"
-            onClick={handleLogout}
-          />
-          <RiShoppingCart2Line
-            className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200"
-            onClick={() => navigate("/cart")}
-          />
+          {user && (
+            <>
+              <TbLogout2
+                className="cursor-pointer hover:text-red-700 hover:scale-125 transition-transform duration-200 text-red-600"
+                onClick={handleLogout}
+              />
+              <RiShoppingCart2Line
+                className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200"
+                onClick={() => navigate("/cart")}
+              />
+            </>
+          )}
           <div className="profile">
             <CgProfile
               className="cursor-pointer hover:text-stone-900 hover:scale-125 transition-transform duration-200"
@@ -87,42 +98,58 @@ const Hero = () => {
                 onMouseEnter={() => setOpen(true)}
                 onMouseLeave={() => setOpen(false)}
               >
-                <h3 className="text-lg font-semibold text-stone-700">
-                  Hello, {user?.fullname || "Guest"}
-                </h3>
-                <p className="text-sm text-stone-500 mb-4">{user.email}</p>
-                <ul className="space-y-3 text-stone-700 font-medium">
-                  {user.role == "user" && (
-                    <li
-                      className="cursor-pointer hover:text-black"
-                      onClick={() => navigate("/order-hist")}
+                {user ? (
+                  <>
+                    <h3 className="text-lg font-semibold text-stone-700">
+                      Hello, {user?.fullname || "Guest"}
+                    </h3>
+                    <p className="text-sm text-stone-500 mb-4">{user.email}</p>
+                    <ul className="space-y-3 text-stone-700 font-medium">
+                      {user.role == "user" && (
+                        <li
+                          className="cursor-pointer hover:text-black"
+                          onClick={() => navigate("/order-hist")}
+                        >
+                          My Orders
+                        </li>
+                      )}
+                      {user.role == "admin" && (
+                        <li
+                          className="cursor-pointer hover:text-black"
+                          onClick={() => navigate("/owner/dashboard")}
+                        >
+                          My Dashboard
+                        </li>
+                      )}
+                      {user.role == "user" && (
+                        <li
+                          className="cursor-pointer hover:text-black"
+                          onClick={() => navigate("/cart")}
+                        >
+                          Cart
+                        </li>
+                      )}
+                      <li
+                        className="cursor-pointer text-red-600 hover:text-red-700"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </li>
+                    </ul>
+                  </>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    <p className="text-stone-600 text-sm">
+                      You are not logged in
+                    </p>
+                    <button
+                      className="bg-stone-600 text-white text-sm p-2 max-w-17 rounded-md hover:bg-stone-900 cursor-pointer"
+                      onClick={() => navigate("/auth")}
                     >
-                      My Orders
-                    </li>
-                  )}
-                  {user.role == "admin" && (
-                    <li
-                      className="cursor-pointer hover:text-black"
-                      onClick={() => navigate("/owner/dashboard")}
-                    >
-                      My Dashboard
-                    </li>
-                  )}
-                  {user.role == "user" && (
-                    <li
-                      className="cursor-pointer hover:text-black"
-                      onClick={() => navigate("/cart")}
-                    >
-                      Cart
-                    </li>
-                  )}
-                  <li
-                    className="cursor-pointer text-red-600 hover:text-red-700"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </li>
-                </ul>
+                      Login
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

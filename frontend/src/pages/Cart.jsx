@@ -94,12 +94,12 @@ const Cart = () => {
               src={Logo}
               alt="Plainly logo"
               className="h-10 w-auto cursor-pointer"
-              onClick={() => navigate("/home")}
+              onClick={() => navigate("/")}
             />
 
             <h2
               className="font-bold text-3xl text-stone-700 group-hover:text-stone-900 transition cursor-pointer"
-              onClick={() => navigate("/home")}
+              onClick={() => navigate("/")}
             >
               Plainly
             </h2>
@@ -198,7 +198,7 @@ const Cart = () => {
               </p>
               <button
                 className="bg-red-500 p-3 mt-2 text-white rounded-md border border-gray-300 cursor-pointer"
-                onClick={() => navigate("/home")}
+                onClick={() => navigate("/")}
               >
                 Shop Items
               </button>

@@ -15,7 +15,7 @@ const AccessDenied = () => {
       </p>
       <button
         className="p-3 bg-red-800 mt-7 rounded-xl text-white font-semibold cursor-pointer transition-transform duration-300 hover:scale-105"
-        onClick={() => navigate("/home")}
+        onClick={() => navigate("/")}
       >
         Go Home
       </button>

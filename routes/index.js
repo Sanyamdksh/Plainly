@@ -10,9 +10,10 @@ router.get("/", (req, res) => {
 
 router.get("/logout", isLoggedin, (req, res) => {
   res.clearCookie("token", {
-    httpOnly: false,
-    secure: false,
-    sameSite: "lax",
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
   });
   res.json({ success: true, message: "Logged out successfully" });
 });

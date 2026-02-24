@@ -1,25 +1,56 @@
 import React from "react";
-import { Link } from "react-router-dom";
-const Sidebar = () => {
-  return (
-    <div className="w-64 h-screen bg-stone-800 text-white p-6 flex flex-col gap-6">
-      <h2 className="text-3xl font-bold">Owner</h2>
-      <Link className="hover:text-stone-300 text-lg" to="/owner/dashboard">
-        Dashboard
-      </Link>
-      <Link className="hover:text-stone-300 text-lg" to="/owner/add-product">
-        Add Product
-      </Link>
-      <Link
-        className="hover:text-stone-300 text-lg"
-        to="/owner/manage-products"
-      >
-        Manage Products
-      </Link>
+import { NavLink } from "react-router-dom";
+import { LayoutDashboard, PlusCircle, Package } from "lucide-react";
 
-      <Link className="mt-auto text-red-400 hover:text-red-500" to="/">
+const Sidebar = () => {
+  const base =
+    "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-stone-600 mb-2";
+
+  return (
+    <div className="w-64 min-h-screen bg-amber-100/70 backdrop-blur-sm border-r border-amber-200 p-6 flex flex-col">
+      <h2 className="text-2xl font-semibold text-stone-700 mb-10">
+        Owner Panel
+      </h2>
+
+      <NavLink
+        to="/owner/dashboard"
+        className={({ isActive }) =>
+          `${base} ${
+            isActive ? "bg-white shadow-sm text-stone-900" : "hover:bg-white/70"
+          }`
+        }
+      >
+        <LayoutDashboard size={18} />
+        Dashboard
+      </NavLink>
+
+      <NavLink
+        to="/owner/add-product"
+        className={({ isActive }) =>
+          `${base} ${
+            isActive ? "bg-white shadow-sm text-stone-900" : "hover:bg-white/70"
+          }`
+        }
+      >
+        <PlusCircle size={18} />
+        Add Product
+      </NavLink>
+
+      <NavLink
+        to="/owner/manage-products"
+        className={({ isActive }) =>
+          `${base} ${
+            isActive ? "bg-white shadow-sm text-stone-900" : "hover:bg-white/70"
+          }`
+        }
+      >
+        <Package size={18} />
+        Manage Products
+      </NavLink>
+
+      <NavLink to="/" className="mt-auto text-red-400 hover:text-red-500 pt-10">
         Logout
-      </Link>
+      </NavLink>
     </div>
   );
 };

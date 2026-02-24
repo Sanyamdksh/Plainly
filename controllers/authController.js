@@ -26,7 +26,16 @@ module.exports.registerUser = async (req, res) => {
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ success: true, message: "User registered successfully" });
+    res.json({
+      success: true,
+      message: "User registered successfully",
+      user: {
+        fullname: user.fullname,
+        email: user.email,
+        role: user.role,
+        _id: user._id,
+      },
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: "There was an error" });
   }
@@ -57,7 +66,16 @@ module.exports.loginUser = async (req, res) => {
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ success: true, message: "Login successful" });
+    res.json({
+      success: true,
+      message: "Login successful",
+      user: {
+        fullname: user.fullname,
+        email: user.email,
+        role: user.role,
+        _id: user._id,
+      },
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server error" });
   }

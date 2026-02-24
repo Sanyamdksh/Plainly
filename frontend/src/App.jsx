@@ -18,58 +18,45 @@ import ManageProduct from "./pages/admin/ManageProduct";
 import Reviews from "./Landing/reviews";
 import Footer from "./Landing/Footer";
 import axios from "axios";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { useAuth } from "./context/AuthContext";
+
 axios.defaults.withCredentials = true;
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("https://plainly-backend.onrender.com/users/profile", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data.user);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+  const { user, loading } = useAuth();
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AuthContainer />} />
+        <Route path="/auth" element={<AuthContainer />} />
         <Route
-          path="/home"
+          path="/"
           element={
-            <>
-              <Landing />
-              {user?.role == "user" && <Products />}
-              {user?.role == "user" && <Reviews />}
-              <Footer />
-            </>
+            loading ? (
+              <p className="text-center mt-20 text-xl">Loading...</p>
+            ) : (
+              <>
+                <Landing />
+                <Products />
+                <Reviews />
+                <Footer />
+              </>
+            )
           }
         />
-        {/* <Route
-          path="/products"
-          element={
-            <>
-              <Landing />
-              <Products scrollToSection />
-            </>
-          }
-        /> */}
-        <Route path="/buynow" element={<BuyNow />} />
-        <Route path="/order-hist" element={<Order />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/buynow" element={<BuyNow />} />
+          <Route path="/order-hist" element={<Order />} />
+          <Route path="/cart" element={<Cart />} />
+        </Route>
 
         <Route path="/access-denied" element={<AccessDenied />} />
-        <Route element={<AdminRoute user={user} loading={loading} />}>
-          <Route path="/owner/dashboard" element={<DashLayout />} />
-          <Route path="/owner/add-product" element={<AddProduct />} />
-          <Route path="/owner/manage-products" element={<ManageProduct />} />
-        </Route>
+        {/* <Route element={<AdminRoute user={user} loading={loading} />}> */}
+        <Route path="/owner/dashboard" element={<DashLayout />} />
+        <Route path="/owner/add-product" element={<AddProduct />} />
+        <Route path="/owner/manage-products" element={<ManageProduct />} />
+        {/* </Route> */}
       </Routes>
       <ToastContainer position="bottom-right" autoClose={2000} />
     </Router>
