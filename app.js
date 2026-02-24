@@ -4,7 +4,7 @@ const app = express();
 app.set("trust proxy", 1);
 const cookieParser = require("cookie-parser");
 const path = require("path");
-
+const adminAnalytics = require("./routes/admin-analytics");
 const productsRouter = require("./routes/productsRouter");
 const usersRouter = require("./routes/usersRouter");
 // const ownersRouter = require("./routes/ownersRouter");
@@ -32,6 +32,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/uploads", express.static("uploads"));
-
+app.use("/admin", adminAnalytics);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT);

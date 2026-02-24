@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "./dashboard";
 
 const StatCard = ({ title, value }) => (
@@ -9,6 +9,16 @@ const StatCard = ({ title, value }) => (
 );
 
 const DashLayout = () => {
+  const [stats, setStats] = useState(null);
+  useEffect(() => {
+    fetch("https://plainly-backend.onrender.com/admin/analytics", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setStats(data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Dashboard>
       <div className="mb-10">
@@ -16,12 +26,13 @@ const DashLayout = () => {
         <p className="text-stone-600 mt-2">Manage your products from here.</p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <StatCard title="Total Products" value="24" />
-        <StatCard title="Orders This Month" value="12" />
-        <StatCard title="Revenue" value="₹45,200" />
-      </div>
+      {stats && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <StatCard title="Total Products" value={stats.totalProducts} />
+          <StatCard title="Orders" value={stats.totalOrders} />
+          <StatCard title="Revenue" value={`₹${stats.totalRevenue}`} />
+        </div>
+      )}
 
       {/* Quick Action */}
       <div className="bg-white rounded-2xl p-8 shadow-sm">
