@@ -40,7 +40,7 @@ const DashLayout = () => {
           Quick Actions
         </h3>
 
-        <button className="bg-stone-800 text-white px-6 py-3 rounded-xl hover:bg-stone-700 transition">
+        <button className="bg-stone-800 text-white px-6 py-3 rounded-xl hover:bg-stone-700 transition cursor-pointer">
           + Add New Product
         </button>
       </div>

@@ -135,7 +135,7 @@ const Hero = () => {
                       You are not logged in
                     </p>
                     <button
-                      className="bg-stone-600 text-white text-sm p-2 max-w-17 rounded-md hover:bg-stone-900 cursor-pointer"
+                      className="bg-stone-600 text-white text-sm p-2 max-w-17 rounded-md hover:bg-stone-900 transition cursor-pointer"
                       onClick={() => navigate("/auth")}
                     >
                       Login
@@ -175,9 +175,6 @@ const Hero = () => {
             >
               Shop Now
             </button>
-            {/* <button className="border border-stone-700 text-stone-700 px-6 py-3 rounded-md text-lg font-medium hover:bg-stone-700 hover:text-white transition">
-              Explore
-            </button> */}
           </div>
         </div>
 

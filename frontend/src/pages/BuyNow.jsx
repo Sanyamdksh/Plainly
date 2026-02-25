@@ -117,6 +117,21 @@ const BuyNow = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const fields = [
+    { label: "Contact", name: "contact", type: "tel", width: "w-[40%]" },
+    { label: "Address Line 1", name: "line1", type: "text", width: "w-[80%]" },
+    { label: "Address Line 2", name: "line2", type: "text", width: "w-[80%]" },
+    { label: "City", name: "city", type: "text", width: "w-[50%]" },
+  ];
+
   const TotalPrice = cart.reduce(
     (sum, item) =>
       sum +
@@ -128,7 +143,7 @@ const BuyNow = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-slate-100">
+      <div className="min-h-screen bg-zinc-50">
         <div className="bg-amber-50 shadow-sm border-b border-amber-100 px-10 py-3">
           <div className="flex items-center gap-1 group">
             <img
@@ -146,46 +161,30 @@ const BuyNow = () => {
             </h2>
           </div>
         </div>
-        <div className="p-5">
-          <h2 className="font-semibold text-black text-4xl ">Shopping Cart</h2>
-          <div className="flex flex-row gap-x-3 p-2">
-            <button
-              className="bg-red-400 rounded-md p-1 cursor-pointer hover:bg-red-500 "
-              onClick={() => navigate("/products")}
-            >
-              Shop more items
-            </button>
-            <span>|</span>
-            <button
-              className="bg-stone-300 rounded-md p-1 cursor-pointer hover:bg-stone-400"
-              onClick={() => setShowForm(true)}
-            >
-              Change Address
-            </button>
-          </div>
-          <div className="flex flex-row gap-8">
+        <div className="max-w-7xl mx-auto px-8 py-10">
+          <h2 className="font-semibold text-black text-4xl ">Checkout</h2>
+          <div className="flex flex-row gap-8 py-7 px-12">
             <div className="w-full flex flex-col">
-              <div className="w-[75%] bg-amber-50 rounded-md shadow-md border border-gray-300 p-2">
+              <div className="w-[75%] bg-zinc-50 rounded-md shadow-md border border-zinc-400 p-2">
                 <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-col ml-10">
-                    <p className="text-2xl">Hello, {user.fullname}</p>
+                    <p className="font-semibold text-2xl">
+                      Hello, {user.fullname}
+                    </p>
                     <p className="text-base text-gray-600">{user.email}</p>
                   </div>
-                  <button className="mr-7 bg-stone-200 p-2 rounded-xl shadow-md border border-gray-300 cursor-pointer">
-                    Change
-                  </button>
                 </div>
               </div>
-              <div className="w-[75%] bg-amber-50 rounded-md shadow-md border border-gray-300 p-3 mt-4">
+              <div className="w-[75%] bg-zinc-50 rounded-md shadow-md border border-zinc-400 p-3 mt-4">
                 <div className="flex flex-row items-center justify-between">
-                  <h2 className="font-semibold text-black text-2xl ml-9">
+                  <h2 className="font-semibold text-black text-2xl ml-10">
                     Address Details
                   </h2>
                   <button
-                    className="mr-5 bg-stone-200 p-2 rounded-xl shadow-md border border-gray-300 cursor-pointer"
+                    className="mr-5 p-2 bg-white rounded-md shadow-md px-3 border border-zinc-400 cursor-pointer hover:bg-zinc-100 transition"
                     onClick={() => setShowForm(true)}
                   >
-                    {user.address ? "Change Address" : "Add Address"}
+                    {user.address ? "Change" : "Add"}
                   </button>
                 </div>
                 {user.address && !showForm && (
@@ -199,150 +198,78 @@ const BuyNow = () => {
                     <p>Contact: {user.address.contact}</p>
                   </div>
                 )}
-              </div>
-              {showForm && (
-                <div className="w-[60%] bg-gray-200 rounded-md shadow-md border border-gray-300 p-3 mt-5">
-                  <form className="flex flex-col gap-y-4">
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="contact"
-                        className="text-sm text-gray-700"
-                      >
-                        Contact
-                      </label>
-                      <input
-                        id="contact"
-                        type="number"
-                        placeholder="Contact Number"
-                        className="bg-white border border-gray-500 p-2 rounded w-[40%]"
-                        onChange={(e) =>
-                          setFormData({ ...formData, contact: e.target.value })
-                        }
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="address1"
-                        className="text-sm text-gray-700"
-                      >
-                        Address Line 1
-                      </label>
-                      <input
-                        id="address1"
-                        type="text"
-                        placeholder="Address Line 1"
-                        className="bg-white border border-gray-500 p-2 rounded w-[80%]"
-                        onChange={(e) =>
-                          setFormData({ ...formData, line1: e.target.value })
-                        }
-                      />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="address2"
-                        className="text-sm text-gray-700"
-                      >
-                        Address Line 2
-                      </label>
-                      <input
-                        id="address2"
-                        type="text"
-                        placeholder="Address Line 2"
-                        className="bg-white border border-gray-500 p-2 rounded w-[80%]"
-                        onChange={(e) =>
-                          setFormData({ ...formData, line2: e.target.value })
-                        }
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <label htmlFor="city" className="text-sm text-gray-700">
-                        City
-                      </label>
-                      <input
-                        id="city"
-                        type="text"
-                        placeholder="City"
-                        className="bg-white border border-gray-500 p-2 rounded w-[50%]"
-                        onChange={(e) =>
-                          setFormData({ ...formData, city: e.target.value })
-                        }
-                      />
-                    </div>
-                    <div className="flex gap-x-4 items-center">
-                      <div className="flex flex-col w-[40%]">
-                        <label
-                          htmlFor="state"
-                          className="text-sm text-gray-700"
-                        >
-                          State
+                {showForm && (
+                  <form className="flex flex-col gap-y-4 mx-10">
+                    {fields.map((field) => (
+                      <div key={field.name} className="flex flex-col">
+                        <label className="text-sm text-gray-700">
+                          {field.label}
                         </label>
                         <input
-                          id="state"
-                          type="text"
-                          placeholder="State"
-                          className="bg-white border border-gray-500 p-2 rounded"
-                          onChange={(e) =>
-                            setFormData({ ...formData, state: e.target.value })
-                          }
+                          name={field.name}
+                          type={field.type}
+                          placeholder={field.label}
+                          className={`bg-white border border-gray-500 p-2 rounded ${field.width}`}
+                          onChange={handleChange}
                         />
                       </div>
-
-                      <div className="flex flex-col w-[40%]">
-                        <label htmlFor="zip" className="text-sm text-gray-700">
-                          Zip Code
-                        </label>
-                        <input
-                          id="zip"
-                          type="text"
-                          placeholder="Zip Code"
-                          className="bg-white border border-gray-500 p-2 rounded"
-                          onChange={(e) =>
-                            setFormData({ ...formData, zip: e.target.value })
-                          }
-                        />
-                      </div>
+                    ))}
+                    <div className="flex gap-x-4">
+                      {["state", "zip"].map((field) => (
+                        <div key={field} className="flex flex-col w-[40%]">
+                          <label className="text-sm text-gray-700 capitalize">
+                            {field === "zip" ? "Zip Code" : "State"}
+                          </label>
+                          <input
+                            name={field}
+                            type="text"
+                            placeholder={field === "zip" ? "Zip Code" : "State"}
+                            className="bg-white border border-gray-500 p-2 rounded"
+                            onChange={handleChange}
+                          />
+                        </div>
+                      ))}
                     </div>
                     <button
                       type="button"
-                      className="bg-stone-700 text-white px-4 py-2 w-[40%] rounded-lg hover:bg-stone-800 cursor-pointer"
+                      className="bg-stone-700 text-white px-4 py-2 w-[40%] rounded-lg hover:bg-stone-800 transition"
                       onClick={handleAddress}
                     >
                       Save Address
                     </button>
                   </form>
-                </div>
-              )}
-              <div className="w-[75%] bg-amber-50 rounded-md shadow-md border border-gray-300 p-4 mt-6">
-                <h2 className="font-semibold text-black text-2xl ml-4">
-                  Payment Method
-                </h2>
+                )}
+              </div>
+              <div className="w-[75%] bg-zinc-50 rounded-md shadow-md border border-zinc-400 p-4 mt-6">
+                <div className="ml-10">
+                  <h2 className="font-semibold text-black text-2xl">
+                    Payment Method
+                  </h2>
 
-                <div className="flex items-center gap-3 ml-6 mt-4">
-                  <input
-                    type="radio"
-                    id="cod"
-                    name="payment"
-                    value="COD"
-                    defaultChecked
-                    className="w-5 h-5"
-                  />
-                  <label htmlFor="cod" className="text-lg text-gray-700">
-                    Cash on Delivery (COD)
-                  </label>
+                  <div className="flex items-center gap-3 mt-4">
+                    <input
+                      type="radio"
+                      id="cod"
+                      name="payment"
+                      value="COD"
+                      defaultChecked
+                      className="w-5 h-5"
+                    />
+                    <label htmlFor="cod" className="text-lg text-gray-700">
+                      Cash on Delivery (COD)
+                    </label>
+                  </div>
+                  <button
+                    className={
+                      !user.address
+                        ? "mt-6 bg-stone-600 text-white px-7 py-3 rounded-lg cursor-not-allowed"
+                        : "mt-6 bg-stone-700 text-white px-7 py-3 rounded-lg hover:bg-stone-900 transition cursor-pointer"
+                    }
+                    onClick={!user.address ? "" : handleOrder}
+                  >
+                    Place Order
+                  </button>
                 </div>
-
-                <button
-                  className={
-                    !user.address
-                      ? "mt-6 ml-4 bg-stone-600 text-white px-7 py-3 rounded-lg cursor-not-allowed"
-                      : "mt-6 ml-4 bg-stone-700 text-white px-7 py-3 rounded-lg hover:bg-stone-900 transition cursor-pointer"
-                  }
-                  onClick={!user.address ? "" : handleOrder}
-                >
-                  Place Order
-                </button>
               </div>
             </div>
             <div className="w-[60%] bg-white rounded-md shadow-md border p-5 h-fit">

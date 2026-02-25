@@ -21,6 +21,7 @@ import axios from "axios";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import Loader from "./Loader/Loader";
+
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -52,11 +53,11 @@ function App() {
         </Route>
 
         <Route path="/access-denied" element={<AccessDenied />} />
-        {/* <Route element={<AdminRoute user={user} loading={loading} />}> */}
-        <Route path="/owner/dashboard" element={<DashLayout />} />
-        <Route path="/owner/add-product" element={<AddProduct />} />
-        <Route path="/owner/manage-products" element={<ManageProduct />} />
-        {/* </Route> */}
+        <Route element={<AdminRoute user={user} loading={loading} />}>
+          <Route path="/owner/dashboard" element={<DashLayout />} />
+          <Route path="/owner/add-product" element={<AddProduct />} />
+          <Route path="/owner/manage-products" element={<ManageProduct />} />
+        </Route>
       </Routes>
       <ToastContainer position="bottom-right" autoClose={2000} />
     </Router>

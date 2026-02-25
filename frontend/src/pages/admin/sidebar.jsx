@@ -65,7 +65,7 @@ const Sidebar = () => {
       </NavLink>
 
       <button
-        className="mt-auto text-red-400 hover:text-red-500 pt-10"
+        className="mt-auto rounded-md border p-2 border-red-400 text-red-500 hover:bg-red-100 cursor-pointer"
         onClick={handleLogout}
       >
         Logout
