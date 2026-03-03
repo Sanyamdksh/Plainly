@@ -135,14 +135,16 @@ const Products = ({ scrollToSection = false, variant = "store" }) => {
                 {item.name}
               </h3>
 
-              <div className="flex items-center gap-2 mt-1">
-                <p className="text-sm font-semibold text-black line-through">
-                  Rs. {item.price}
-                </p>
-                <p className="text-xs font-semibold text-yellow-700">
-                  {item.discount}% off
-                </p>
-              </div>
+              {item.discount > 0 && (
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-sm font-semibold text-black line-through">
+                    Rs. {item.price}
+                  </p>
+                  <p className="text-xs font-semibold text-yellow-700">
+                    {item.discount}% off
+                  </p>
+                </div>
+              )}
 
               <p className="text-lg font-semibold text-black mt-1">
                 Rs. {item.price - (item.price * item.discount) / 100}
