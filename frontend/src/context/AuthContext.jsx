@@ -16,6 +16,11 @@ export const AuthProvider = ({ children }) => {
             credentials: "include",
           },
         );
+        if (res.status === 401) {
+          setUser(null);
+          setLoading(false);
+          return;
+        }
         const data = await res.json();
         if (data.success) {
           setUser(data.user);

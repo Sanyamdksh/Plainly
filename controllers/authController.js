@@ -56,7 +56,7 @@ module.exports.loginUser = async (req, res) => {
     if (!match) {
       return res
         .status(401)
-        .json({ success: false, message: "Invalif credentials" });
+        .json({ success: false, message: "Invalid credentials" });
     }
     const token = generateToken(user);
     res.cookie("token", token, {
